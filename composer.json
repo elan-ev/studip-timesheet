@@ -1,0 +1,28 @@
+{
+    "name": "elan-ev/studip-stundenzettel",
+    "version": "0.0.1",
+    "type": "project",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Ron Lucke",
+            "email": "lucke@elan-ev.de"
+        },
+        {
+            "name": "Farbod Zamani",
+            "email": "zamani@elan-ev.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Stundenzettel\\": "lib/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.14"
+    },
+    "require-dev": {
+        "behat/behat": "^3.32"
+    }
+}

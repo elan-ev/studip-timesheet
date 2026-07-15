@@ -1,0 +1,10 @@
+pluginname=StudipStundenzettel
+displayname=StudipStundenzettel
+pluginclassname=StudipStundenzettel
+origin=elan-ev
+version=0.0.1
+category=todo
+summary=todo
+description=todo
+studipMinVersion=5.0
+studipMaxVersion=5.9.9
