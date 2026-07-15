@@ -1,5 +1,5 @@
 {
-    "name": "studip-stundenzettel",
+    "name": "studip-timesheet",
     "private": true,
     "version": "0.0.1",
     "author": "Ron Lucke <lucke@elan-ev.de> (elan e.V.)",
@@ -10,19 +10,19 @@
     "license": "GPL-3.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/elan-ev/studip-stundenzettel.git"
+        "url": "https://github.com/elan-ev/studip-timesheet.git"
     },
     "homepage": "https://elan-ev.de",
     "type": "module",
     "files": [
         "dist"
     ],
-    "main": "./dist/studip-stundenzettel-lib.umd.cjs",
-    "module": "./dist/studip-stundenzettel-lib.js",
+    "main": "./dist/studip-timesheet-lib.umd.cjs",
+    "module": "./dist/studip-timesheet-lib.js",
     "exports": {
         ".": {
-            "import": "./dist/studip-stundenzettel-lib.js",
-            "require": "./dist/studip-stundenzettel-lib.umd.cjs"
+            "import": "./dist/studip-timesheet-lib.js",
+            "require": "./dist/studip-timesheet-lib.umd.cjs"
         }
     },
     "scripts": {
@@ -33,7 +33,7 @@
         "gettext:compile": "node scripts/compile-translations.js",
         "preview": "vite preview",
         "prezip": "npm install && npm run build && composer install --no-dev",
-        "zip": "zip -r studip-stundenzettel-v$npm_package_version.zip controllers dist lib migrations vendor views LICENSE LICENSE-SUPPLEMENT.txt README.md StudipStundenZettel.php bootstrap.php plugin.manifest -x '*.editorconfig' -x 'vendor/*.git*' -x '*.DS_Store'"
+        "zip": "zip -r studip-timesheet-v$npm_package_version.zip controllers dist lib migrations vendor views LICENSE LICENSE-SUPPLEMENT.txt README.md StudipStundenZettel.php bootstrap.php plugin.manifest -x '*.editorconfig' -x 'vendor/*.git*' -x '*.DS_Store'"
     },
     "dependencies": {
         "pinia": "^3.0.3",

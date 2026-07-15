@@ -1,6 +1,6 @@
-pluginname=StudipStundenzettel
-displayname=StudipStundenzettel
-pluginclassname=StudipStundenzettel
+pluginname=StudipTimesheet
+displayname=StudipTimesheet
+pluginclassname=StudipTimesheet
 origin=elan-ev
 version=0.0.1
 category=todo

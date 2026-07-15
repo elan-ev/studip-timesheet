@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => {
             cssCodeSplit: false,
             rollupOptions: {
                 input: {
-                    'studip-stundenzettel': 'src/stundenzettel.js',
-                    'studip-stundenzettel-admin': 'src/stundenzettel-admin.js',
+                    'studip-timesheet': 'src/timesheet.js',
+                    'studip-timesheet-admin': 'src/timesheet-admin.js',
                 },
                 output: {
                     entryFileNames: `[name].js`,

@@ -1,5 +1,5 @@
 {
-    "name": "elan-ev/studip-stundenzettel",
+    "name": "elan-ev/studip-timesheet",
     "version": "0.0.1",
     "type": "project",
     "license": "GPL-3.0",
@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Stundenzettel\\": "lib/"
+            "Timesheet\\": "lib/"
         }
     },
     "require": {
