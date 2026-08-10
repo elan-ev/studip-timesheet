@@ -1,0 +1,87 @@
+name: Run StudIP Timesheet tests
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+
+env:
+  STUDIP_VERSION: "v5.5.11"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: plugin
+
+      - name: Setup PHP with Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      # --- ADD NODE & BUILD STEPS HERE ---
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Build Timesheet plugin
+        working-directory: plugin
+        run: npm run github-dev-build
+
+      - name: Clone StudIP Core from GitLab
+        run: |
+          git clone --branch ${{ env.STUDIP_VERSION }} --depth 1 https://gitlab.studip.de/studip/studip.git studip-core
+
+      - name: Mount Plugin into StudIP Core Directory
+        run: |
+          mkdir -p studip-core/public/plugins_packages/elan-ev/StudipTimesheet
+          cp -r plugin/* studip-core/public/plugins_packages/elan-ev/StudipTimesheet/
+
+      - name: Start StudIP Docker Compose Instance
+        working-directory: studip-core
+        run: docker compose -f docker-compose.yml up -d --wait
+
+      - name: Wait for StudIP Web Service
+        run: |
+          echo "Waiting for StudIP server to initialize..."
+          until curl -s -f http://localhost:8032/ > /dev/null || curl -s -f http://localhost/ > /dev/null; do
+            echo "StudIP is booting... sleeping 5s"
+            sleep 5
+          done
+          echo "StudIP is up and responding!"
+
+      # Needed as studip directory has root owner and chown on whole directory takes too long
+      - name: Allow read, write and execute for all users in data and plugin directory
+        working-directory: studip-core
+        run: docker compose exec -T web chmod -R 777 data public/plugins_packages
+
+      # Auto migrate in studip image seems to be broken
+      - name: Migrate studip
+        working-directory: studip-core
+        run: docker compose exec -T web php ./cli/studip migrate
+
+      - name: Register plugin
+        working-directory: studip-core
+        run: docker compose exec -T web php ./cli/studip plugin:register public/plugins_packages/elan-ev/StudipTimesheet
+
+      - name: Activate plugin
+        working-directory: studip-core
+        run: docker compose exec -T web php ./cli/studip plugin:activate StudipTimesheet
+
+      - name: Run behat tests
+        working-directory: plugin
+        run: vendor/bin/behat --stop-on-failure --colors --format=progress
+
+      - name: Stop containers
+        working-directory: studip-core
+        if: always()
+        run: docker compose -f docker-compose.yml down

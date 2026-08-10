@@ -29,11 +29,13 @@
         "dev": "vite build --watch",
         "build": "vite build",
         "dev-build": "vite build --mode development",
+        "github-dev-build": "npm install && composer install && npm run dev-build",
         "gettext:extract": "node scripts/extract.js",
         "gettext:compile": "node scripts/compile-translations.js",
         "preview": "vite preview",
         "prezip": "npm install && npm run build && composer install --no-dev",
-        "zip": "zip -r studip-timesheet-v$npm_package_version.zip controllers dist lib migrations vendor views LICENSE LICENSE-SUPPLEMENT.txt README.md StudipStundenZettel.php bootstrap.php plugin.manifest -x '*.editorconfig' -x 'vendor/*.git*' -x '*.DS_Store'"
+        "zip": "zip -r studip-timesheet-v$npm_package_version.zip controllers dist lib migrations vendor views LICENSE LICENSE-SUPPLEMENT.txt README.md StudipTimesheet.php bootstrap.php plugin.manifest -x '*.editorconfig' -x 'vendor/*.git*' -x '*.DS_Store'",
+        "docs-build": "npx @redocly/cli build-docs docs/api/openapi.yaml -o docs/api/api-docs.html"
     },
     "dependencies": {
         "pinia": "^3.0.3",
@@ -43,6 +45,7 @@
     "devDependencies": {
         "@ckeditor/ckeditor5-vue": "^7.3.0",
         "@headlessui/vue": "^1.7.23",
+        "@redocly/cli": "^2.40.0",
         "@vitejs/plugin-vue": "^6.0.1",
         "gettext-extractor-vue": "^5.2.0",
         "gettext-parser": "^9.0.2",

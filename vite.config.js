@@ -17,14 +17,14 @@ export default defineConfig(({ mode }) => {
             cssCodeSplit: false,
             rollupOptions: {
                 input: {
-                    'studip-timesheet': 'src/timesheet.js',
-                    'studip-timesheet-admin': 'src/timesheet-admin.js',
+                    'studip-timesheet': 'src/studip-timesheet.js',
+                    'studip-timesheet-admin': 'src/studip-timesheet-admin.js',
                 },
                 output: {
                     entryFileNames: `[name].js`,
                     assetFileNames: (assetInfo) => {
                         if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-                            return 'checkin.css';
+                            return 'timesheet.css';
                         }
                         return '[name].[ext]';
                     },

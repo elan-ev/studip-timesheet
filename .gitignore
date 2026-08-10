@@ -5,4 +5,4 @@ package-lock.json
 vendor
 settings.json
 *.zip
-DS_Store
+*DS_Store

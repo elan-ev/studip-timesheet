@@ -1,0 +1,1688 @@
+openapi: 3.1.0
+info:
+  title: 'Stud.IP Timesheet plugin API Routes'
+  license:
+    name: GPL-3.0 WITH License-Supplement (see LICENSE-SUPPLEMENT.txt)
+    identifier: GPL-3.0
+    url: https://github.com/elan-ev/studip-timesheet/blob/main/LICENSE
+  version: 0.0.1
+servers:
+  - url: 'http://localhost/jsonapi.php/v1'
+  - url: 'http://localhost/studip/55/jsonapi.php/v1'
+paths:
+  '/timesheet-contracts':
+    get:
+      tags:
+        - Contracts
+      summary: Get all contracts
+      operationId: \StudipTimesheet\JsonApi\Routes\Contract\Index
+      responses:
+        '200':
+          description: 'Returning list of Contracts'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Contracts
+      summary: Create a contract
+      operationId: \StudipTimesheet\JsonApi\Routes\Contract\Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractDataPostWrapper"
+      responses:
+        '201':
+          description: 'Created contract'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /timesheet-contracts/{id}:
+    get:
+      tags:
+        - Contracts
+      summary: Show a contract
+      operationId: \StudipTimesheet\JsonApi\Routes\Contract\Show
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Contract'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Contracts
+      summary: Update a contract
+      operationId: \StudipTimesheet\JsonApi\Routes\Contract\Update
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractDataPatchWrapper"
+      responses:
+        '200':
+          description: 'Contract updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Contracts
+      summary: Delete a contract
+      operationId: \StudipTimesheet\JsonApi\Routes\Contract\Delete
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Contract deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-sheets':
+    get:
+      tags:
+        - Sheets
+      summary: Get all sheets
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\Index
+      responses:
+        '200':
+          description: 'Returning list of Sheets'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SheetCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Sheets
+      summary: Create a sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SheetDataPostWrapper"
+      responses:
+        '201':
+          description: 'Created Sheet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sheet'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /timesheet-sheets/{id}:
+    get:
+      tags:
+        - Sheets
+      summary: Show a sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\Show
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Sheet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sheet'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Sheets
+      summary: Update a sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\Update
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SheetDataPatchWrapper"
+      responses:
+        '200':
+          description: 'Sheet updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sheet'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Sheets
+      summary: Delete a sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\Delete
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Sheet deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-contracts/{id}/sheets':
+    get:
+      tags:
+        - Contract-Sheets
+      summary: Get all contract sheets
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\ContractSheetsIndex
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning list of contract Sheets'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SheetCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Contract-Sheets
+      summary: Create a contract sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\ContractSheetCreate
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractSheetDataWrapper"
+      responses:
+        '201':
+          description: 'Created Contract Sheet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sheet'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-contracts/{contract_id}/sheets/{id}':
+    get:
+      tags:
+        - Contract-Sheets
+      summary: Show a contract sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\ContractSheetShow
+      parameters:
+        - in: path
+          name: contract_id
+          required: true
+          description: id of the contract entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Contract Sheet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sheet'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Contract-Sheets
+      summary: Update a contract sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\ContractSheetUpdate
+      parameters:
+        - in: path
+          name: contract_id
+          required: true
+          description: id of the contract entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractSheetDataWrapper"
+      responses:
+        '200':
+          description: 'Contract Sheet updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sheet'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Contract-Sheets
+      summary: Delete a contract sheet
+      operationId: \StudipTimesheet\JsonApi\Routes\Sheet\ContractSheetDelete
+      parameters:
+        - in: path
+          name: contract_id
+          required: true
+          description: id of the contract entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Contract Sheet deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-permissions':
+    get:
+      tags:
+        - Permissions
+      summary: Get all permissions
+      operationId: \StudipTimesheet\JsonApi\Routes\Permission\Index
+      responses:
+        '200':
+          description: 'Returning list of permissions'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Permissions
+      summary: Create a permission
+      operationId: \StudipTimesheet\JsonApi\Routes\Permission\Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PermissionDataPostWrapper"
+      responses:
+        '201':
+          description: 'Created permission'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-permissions/{id}':
+    get:
+      tags:
+        - Permissions
+      summary: Show a permission
+      operationId: \StudipTimesheet\JsonApi\Routes\Permission\Show
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Permission'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Permissions
+      summary: Update a permission
+      operationId: \StudipTimesheet\JsonApi\Routes\Permission\Update
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PermissionDataPatchWrapper"
+      responses:
+        '200':
+          description: 'Permission updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Permissions
+      summary: Delete a permission
+      operationId: \StudipTimesheet\JsonApi\Routes\Permission\Delete
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Permission deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-supervisors':
+    get:
+      tags:
+        - Supervisors
+      summary: Get all supervisors
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\Index
+      responses:
+        '200':
+          description: 'Returning list of supervisors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupervisorCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Supervisors
+      summary: Create a supervisor
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupervisorDataPostWrapper"
+      responses:
+        '201':
+          description: 'Created supervisor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supervisor'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-supervisors/{id}':
+    get:
+      tags:
+        - Supervisors
+      summary: Show a supervisor
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\Show
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Supervisor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supervisor'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    # patch:
+    #   tags:
+    #     - Supervisors
+    #   summary: Update a supervisor
+    #   operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\Update
+    #   parameters:
+    #     - $ref: "#/components/parameters/IdInPath"
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: "#/components/schemas/SupervisorDataPatchWrapper"
+    #   responses:
+    #     '200':
+    #       description: 'Supervisor updated successfully'
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Supervisor'
+    #     '404':
+    #       $ref: '#/components/responses/NotFound'
+    #     '401':
+    #       $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Supervisors
+      summary: Delete a supervisor
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\Delete
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Supervisor deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-contracts/{id}/supervisors':
+    get:
+      tags:
+        - Contract-Supervisors
+      summary: Get all contract supervisors
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorIndex
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning list of contract Supervisors'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupervisorCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Contract-Supervisors
+      summary: Create a contract supervisor
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorCreate
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractSupervisorDataWrapper"
+      responses:
+        '201':
+          description: 'Created Contract Supervisor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supervisor'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-contracts/{contract_id}/supervisors/{id}':
+    get:
+      tags:
+        - Contract-Supervisors
+      summary: Show a contract supervisor
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorShow
+      parameters:
+        - in: path
+          name: contract_id
+          required: true
+          description: id of the contract entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Contract Supervisor'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supervisor'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    # patch:
+    #   tags:
+    #     - Contract-Supervisors
+    #   summary: Update a contract supervisor
+    #   operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorUpdate
+    #   parameters:
+    #     - in: path
+    #       name: contract_id
+    #       required: true
+    #       description: id of the contract entry in path
+    #       schema:
+    #         type: integer
+    #     - $ref: "#/components/parameters/IdInPath"
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: "#/components/schemas/ContractSupervisorDataWrapper"
+    #   responses:
+    #     '200':
+    #       description: 'Contract Supervisor updated successfully'
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Supervisor'
+    #     '404':
+    #       $ref: '#/components/responses/NotFound'
+    #     '401':
+    #       $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Contract-Supervisors
+      summary: Delete a contract supervisor
+      operationId: \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorDelete
+      parameters:
+        - in: path
+          name: contract_id
+          required: true
+          description: id of the contract entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Contract Supervisor deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  # --- Records
+  '/timesheet-records':
+    get:
+      tags:
+        - Records
+      summary: Get all records
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\Index
+      responses:
+        '200':
+          description: 'Returning list of Record'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Records
+      summary: Create a record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecordDataPostWrapper"
+      responses:
+        '201':
+          description: 'Created Record'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-records/{id}':
+    get:
+      tags:
+        - Records
+      summary: Show a record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\Show
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a Record'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Records
+      summary: Update a record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\Update
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecordDataPatchWrapper"
+      responses:
+        '200':
+          description: 'Record updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Records
+      summary: Delete a record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\Delete
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Record deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-sheets/{id}/records':
+    get:
+      tags:
+        - Sheet-Records
+      summary: Get all sheet records
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\SheetRecordIndex
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning list of sheet records'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Sheet-Records
+      summary: Create a sheet record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\SheetRecordCreate
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SheetRecordDataWrapper"
+      responses:
+        '201':
+          description: 'Created sheet record'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-sheets/{sheet_id}/records/{id}':
+    get:
+      tags:
+        - Sheet-Records
+      summary: Show a sheet record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\SheetRecordShow
+      parameters:
+        - in: path
+          name: sheet_id
+          required: true
+          description: id of the sheet entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a sheet record'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Sheet-Records
+      summary: Update a sheet record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\SheetRecordUpdate
+      parameters:
+        - in: path
+          name: sheet_id
+          required: true
+          description: id of the sheet entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SheetRecordDataWrapper"
+      responses:
+        '200':
+          description: 'Sheet record updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Sheet-Records
+      summary: Delete a sheet record
+      operationId: \StudipTimesheet\JsonApi\Routes\Record\SheetRecordDelete
+      parameters:
+        - in: path
+          name: sheet_id
+          required: true
+          description: id of the sheet entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Sheet record deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  # --- Workflow Log
+  '/timesheet-workflowlogs':
+    get:
+      tags:
+        - WorkflowLogs
+      summary: Get all Workflow logs
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLogs\Index
+      responses:
+        '200':
+          description: 'Returning list of workflow logs'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLogCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - WorkflowLogs
+      summary: Create a WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkflowLogDataPostWrapper"
+      responses:
+        '201':
+          description: 'Created WorkflowLog'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLog'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-workflowlogs/{id}':
+    get:
+      tags:
+        - WorkflowLogs
+      summary: Show a WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\Show
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a WorkflowLog'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLog'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - WorkflowLogs
+      summary: Update a WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\Update
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkflowLogDataPatchWrapper"
+      responses:
+        '200':
+          description: 'WorkflowLog updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLog'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - WorkflowLogs
+      summary: Delete a WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\Delete
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'WorkflowLog deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-sheets/{id}/workflowlogs':
+    get:
+      tags:
+        - Sheet-WorkflowLogs
+      summary: Get all sheet WorkflowLogs
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\SheetWorkflowLogIndex
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning list of sheet WorkflowLogs'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLogCollection'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+        - Sheet-WorkflowLogs
+      summary: Create a Sheet WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\SheetWorkflowLogCreate
+      parameters:
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SheetWorkflowLogDataWrapper"
+      responses:
+        '201':
+          description: 'Created sheet WorkflowLog'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLog'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  '/timesheet-sheets/{sheet_id}/workflowlogs/{id}':
+    get:
+      tags:
+        - Sheet-WorkflowLogs
+      summary: Show a sheet WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\SheetWorkflowLogShow
+      parameters:
+        - in: path
+          name: sheet_id
+          required: true
+          description: id of the sheet entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '200':
+          description: 'Returning a sheet WorkflowLog'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLog'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags:
+        - Sheet-WorkflowLogs
+      summary: Update a sheet WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\SheetWorkflowLogUpdate
+      parameters:
+        - in: path
+          name: sheet_id
+          required: true
+          description: id of the sheet entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SheetWorkflowLogDataWrapper"
+      responses:
+        '200':
+          description: 'Sheet WorkflowLog updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowLog'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+        - Sheet-WorkflowLogs
+      summary: Delete a sheet WorkflowLog
+      operationId: \StudipTimesheet\JsonApi\Routes\WorkflowLog\SheetWorkflowLogDelete
+      parameters:
+        - in: path
+          name: sheet_id
+          required: true
+          description: id of the sheet entry in path
+          schema:
+            type: integer
+        - $ref: "#/components/parameters/IdInPath"
+      responses:
+        '204':
+          description: 'Sheet WorkflowLog deleted successfully'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Contract:
+      title: Contract
+      description: 'Timesheet Contract'
+      type: object
+      properties:
+        id:
+          type: integer
+        employee_id:
+          type: string
+        institute_id:
+          type: string
+        type:
+          description: Types of Contracts
+          type: string
+          enum:
+            - new
+            - extension
+            - rehire
+        predecessor_id:
+          type: integer
+        label:
+          type: string
+        hours_per_month:
+          type: integer
+        start_date:
+          type: integer
+        end_date:
+          type: integer
+        half_hours_first_month:
+          type: boolean
+      required:
+        - employee_id
+        - institute_id
+        - type
+        - hours_per_month
+        - start_date
+        - end_date
+    ContractCollection:
+      description: List of Contracts.
+      type: array
+      items:
+        $ref: "#/components/schemas/Contract"
+    ContractAttributesBase:
+      type: object
+      properties:
+        employee-id:
+          type: string
+        institute-id:
+          type: string
+        type:
+          type: string
+        hours-per-month:
+          type: integer
+        start-date:
+          type: integer
+        end-date:
+          type: integer
+        label:
+          type: string
+        predecessor-id:
+          type: integer
+    ContractAttributesPost:
+      allOf:
+        - $ref: '#/components/schemas/ContractAttributesBase'
+      required:
+        - employee-id
+        - institute-id
+        - type
+        - hours-per-month
+        - start-date
+        - end-date
+    ContractAttributesPatch:
+      allOf:
+        - $ref: '#/components/schemas/ContractAttributesBase'
+      required:
+        - type
+        - hours-per-month
+        - start-date
+        - end-date
+    ContractDataPostWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/ContractAttributesPost'
+    ContractDataPatchWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/ContractAttributesPatch'
+    Permission:
+      title: Permission
+      description: 'Timesheet Permission'
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: string
+        institute_id:
+          type: string
+        role:
+          description: Types of Permission Roles
+          type: string
+          enum:
+            - admin
+            - supervisor
+      required:
+        - user_id
+        - institute_id
+        - role
+    PermissionCollection:
+      description: List of Permissions.
+      type: array
+      items:
+        $ref: "#/components/schemas/Permission"
+    PermissionAttributesBase:
+      type: object
+      properties:
+        user-id:
+          type: string
+        institute-id:
+          type: string
+        role:
+          type: string
+    PermissionAttributesPost:
+      allOf:
+        - $ref: '#/components/schemas/PermissionAttributesBase'
+      required:
+        - user-id
+        - institute-id
+        - role
+    PermissionAttributesPatch:
+      allOf:
+        - $ref: '#/components/schemas/PermissionAttributesBase'
+      required:
+        - role
+    PermissionDataPostWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/PermissionAttributesPost'
+    PermissionDataPatchWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/PermissionAttributesPatch'
+    Record:
+      title: Record
+      description: 'Timesheet Sheet Record'
+      type: object
+      properties:
+        id:
+          type: integer
+        sheet_id:
+          type: integer
+        date:
+          type: integer
+        start_time:
+          type: integer
+        end_time:
+          type: integer
+        break_duration:
+          type: integer
+        absence_type:
+          description: Types of Record absence
+          type: string
+          enum:
+            - maternity
+            - holiday
+            - vacation
+            - sick
+            - work
+        comment:
+          type: string
+      required:
+        - sheet_id
+        - date
+        - start_time
+        - end_time
+    RecordCollection:
+      description: List of Records.
+      type: array
+      items:
+        $ref: "#/components/schemas/Record"
+    RecordAttributesBase:
+      type: object
+      properties:
+        sheet-id:
+          type: integer
+        date:
+          type: integer
+        start-time:
+          type: string
+        end-time:
+          type: string
+        break-duration:
+          type: integer
+        absence-type:
+          type: string
+        comment:
+          type: string
+    SheetRecordAttributes:
+      type: object
+      properties:
+        date:
+          type: integer
+        start-time:
+          type: string
+        end-time:
+          type: string
+        break-duration:
+          type: integer
+        absence-type:
+          type: string
+        comment:
+          type: string
+      required:
+        - date
+        - start-time
+        - end-time
+        - break-duration
+    RecordAttributesPost:
+      allOf:
+        - $ref: '#/components/schemas/RecordAttributesBase'
+      required:
+        - sheet-id
+        - date
+        - start-time
+        - end-time
+        - break-duration
+    RecordAttributesPatch:
+      allOf:
+        - $ref: '#/components/schemas/RecordAttributesBase'
+      required:
+        - date
+        - start-time
+        - end-time
+        - break-duration
+    RecordDataPostWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/RecordAttributesPost'
+    RecordDataPatchWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/RecordAttributesPatch'
+    SheetRecordDataWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/SheetRecordAttributes'
+    Sheet:
+      title: Sheet
+      description: 'Timesheet Sheet'
+      type: object
+      properties:
+        id:
+          type: integer
+        contract_id:
+          type: integer
+        year:
+          type: integer
+        month:
+          type: integer
+        status:
+          description: Types of Sheet status
+          type: string
+          enum:
+            - open
+            - submitted
+            - approved_confirm
+            - approved_final
+            - archived
+        workflow_config:
+          description: 'JSON String of workflow configs'
+          type: string
+        deleted_at:
+          type: integer
+        deleted_by:
+          type: string
+        frozen_hours_per_month:
+          type: integer
+      required:
+        - contract_id
+        - year
+        - month
+        - status
+        - workflow_config
+    SheetCollection:
+      description: List of Sheets.
+      type: array
+      items:
+        $ref: "#/components/schemas/Sheet"
+    SheetAttributesBase:
+      type: object
+      properties:
+        contract-id:
+          type: integer
+        year:
+          type: integer
+        month:
+          type: integer
+        status:
+          description: Types of Sheet status
+          type: string
+        workflow-config:
+          description: 'JSON String of workflow configs'
+          type: string
+        deleted-at:
+          type: integer
+        deleted-by:
+          type: string
+        frozen-hours-per-month:
+          type: integer
+    ContractSheetAttributesBase:
+      type: object
+      properties:
+        year:
+          type: integer
+        month:
+          type: integer
+        status:
+          description: Types of Sheet status
+          type: string
+        workflow-config:
+          description: 'JSON String of workflow configs'
+          type: string
+        deleted-at:
+          type: integer
+        deleted-by:
+          type: string
+        frozen-hours-per-month:
+          type: integer
+    SheetAttributesPost:
+      allOf:
+        - $ref: '#/components/schemas/SheetAttributesBase'
+      required:
+        - contract-id
+        - year
+        - month
+        - status
+        - workflow-config
+    ContractSheetAttributes:
+      allOf:
+        - $ref: '#/components/schemas/ContractSheetAttributesBase'
+      required:
+        - year
+        - month
+        - status
+        - workflow-config
+    ContractSheetDataWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/ContractSheetAttributes'
+    SheetAttributesPatch:
+      allOf:
+        - $ref: '#/components/schemas/SheetAttributesBase'
+      required:
+        - year
+        - month
+        - status
+        - workflow-config
+    SheetDataPostWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/SheetAttributesPost'
+    SheetDataPatchWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/SheetAttributesPatch'
+    Supervisor:
+      title: Supervisor
+      description: 'Timesheet Supervisor'
+      type: object
+      properties:
+        contract_id:
+          type: integer
+        user_id:
+          type: string
+      required:
+        - contract_id
+        - user_id
+    SupervisorCollection:
+      description: List of Supervisors.
+      type: array
+      items:
+        $ref: "#/components/schemas/Supervisor"
+    SupervisorAttributesBase:
+      type: object
+      properties:
+        contract-id:
+          type: integer
+        user-id:
+          type: string
+    ContractSupervisorAttributesBase:
+      type: object
+      properties:
+        user-id:
+          type: string
+    SupervisorAttributesPost:
+      allOf:
+        - $ref: '#/components/schemas/SupervisorAttributesBase'
+      required:
+        - contract-id
+        - user-id
+    ContractSupervisorAttributes:
+      allOf:
+        - $ref: '#/components/schemas/ContractSupervisorAttributesBase'
+      required:
+        - user-id
+    ContractSupervisorDataWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/ContractSupervisorAttributes'
+    SupervisorAttributesPatch:
+      allOf:
+        - $ref: '#/components/schemas/SupervisorAttributesBase'
+      required:
+        - contract-id
+        - user-id
+    SupervisorDataPostWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/SupervisorAttributesPost'
+    SupervisorDataPatchWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/SupervisorAttributesPatch'
+    WorkflowLog:
+      title: WorkflowLog
+      description: 'Timesheet Workflow Log'
+      type: object
+      properties:
+        id:
+          type: integer
+        sheet_id:
+          type: integer
+        user_id:
+          type: string
+        action:
+          description: Types of Workflow log action
+          type: string
+          enum:
+            - manual_unlock
+            - system_override
+            - unsuspend
+            - soft_delete
+            - reject
+            - approve_final
+            - approved_confirm
+            - submit
+        performed_at:
+          type: integer
+        comment:
+          type: string
+      required:
+        - sheet_id
+        - user_id
+        - action
+    WorkflowLogCollection:
+      description: List of Workflow Logs.
+      type: array
+      items:
+        $ref: "#/components/schemas/WorkflowLog"
+    WorkflowLogAttributesBase:
+      type: object
+      properties:
+        sheet-id:
+          type: integer
+        user-id:
+          type: string
+        action:
+          description: Types of Workflow log action
+          type: string
+        performed-at:
+          type: integer
+        comment:
+          type: string
+    SheetWorkflowLogAttributes:
+      type: object
+      properties:
+        user-id:
+          type: string
+        action:
+          description: Types of Workflow log action
+          type: string
+        performed-at:
+          type: integer
+        comment:
+          type: string
+      required:
+        - user-id
+        - action
+    WorkflowLogAttributesPost:
+      allOf:
+        - $ref: '#/components/schemas/WorkflowLogAttributesBase'
+      required:
+        - sheet-id
+        - user-id
+        - action
+    WorkflowLogAttributesPatch:
+      allOf:
+        - $ref: '#/components/schemas/WorkflowLogAttributesBase'
+      required:
+        - user-id
+        - action
+    WorkflowLogDataPostWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/WorkflowLogAttributesPost'
+    WorkflowLogDataPatchWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/WorkflowLogAttributesPatch'
+    SheetWorkflowLogDataWrapper:
+      allOf:
+        - $ref: '#/components/schemas/JsonApiDataBase'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                attributes:
+                  $ref: '#/components/schemas/SheetWorkflowLogAttributes'
+    Error:
+      type: object
+      properties:
+        type:
+          type: string
+          example: object
+        title:
+          type: string
+          example: Validation failed
+    JsonApiDataBase:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - attributes
+          properties:
+            attributes:
+              type: object
+  responses:
+    BadRequest:
+      description: Bad request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    IdInPath:
+      name: id
+      required: true
+      in: path
+      description: id of the entry in path
+      schema:
+        type: integer
+  requestBodies:
+    ContractRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContractDataWrapper'

@@ -34,7 +34,7 @@ class StudipTimesheet extends StudIPPlugin implements SystemPlugin, JsonApiPlugi
         ]);
 
         if ($GLOBALS['perm']->have_perm("root")) {
-            PageLayout::addScript($this->getPluginUrl() . '/dist/studip-checkin-admin.js', [
+            PageLayout::addScript($this->getPluginUrl() . '/dist/studip-timesheet-admin.js', [
                 'type' => 'module',
                 'rel' => 'preload',
             ]);
