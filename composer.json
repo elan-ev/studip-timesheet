@@ -1,6 +1,6 @@
 {
     "name": "elan-ev/studip-timesheet",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "project",
     "license": "GPL-3.0",
     "authors": [
@@ -24,17 +24,17 @@
         }
     },
     "require": {
-        "php": "^8.0",
-        "guzzlehttp/guzzle": "^7.14"
+        "php": "8.2",
+        "guzzlehttp/guzzle": "7.15.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.5",
-        "behat/behat": "^3.15",
-        "behat/mink-browserkit-driver": "^2.3",
-        "symfony/http-client": "^7.4",
-        "behat/mink-selenium2-driver": "^1.7",
+        "phpunit/phpunit": "11.5.56",
+        "behat/behat": "3.19.0",
+        "behat/mink-browserkit-driver": "2.3.0",
+        "symfony/http-client": "7.4.16",
+        "behat/mink-selenium2-driver": "1.7.0",
         "behat/gherkin": "4.10.0",
-        "friends-of-behat/mink-extension": "^2.7",
-        "symfony/mime": "^7.4"
+        "friends-of-behat/mink-extension": "2.7.5",
+        "symfony/mime": "7.4.16"
     }
 }
