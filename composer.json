@@ -13,6 +13,11 @@
             "email": "zamani@elan-ev.de"
         }
     ],
+    "config": {
+        "audit": {
+            "abandoned": "report"
+        }
+    },
     "autoload": {
         "psr-4": {
             "StudipTimesheet\\": "lib/"
