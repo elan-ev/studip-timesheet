@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: src/router/timesheet.js
+msgid "Nicht gefunden"
+msgstr ""
+
+#: src/router/timesheet.js
+msgid "Stundennachweise der Zeiterfassung"
+msgstr ""
+
+#: src/views/OverviewView.vue
+#: src/views/OverviewView.vue:2
+msgid "Übersicht"
+msgstr ""
+
+#: src/router/timesheet.js
+msgid "Übersicht der Zeiterfassung"
+msgstr ""

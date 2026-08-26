@@ -2,22 +2,22 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "studip-timesheet@0.0.2",
-  "documentNamespace": "http://spdx.org/spdxdocs/studip-timesheet-0.0.2-6844b1af-f922-4f22-bc2b-b45c81e06213",
+  "name": "studip-timesheet@0.1.0",
+  "documentNamespace": "http://spdx.org/spdxdocs/studip-timesheet-0.1.0-4515112b-06cc-4b5e-806d-ec437098f72c",
   "creationInfo": {
-    "created": "2026-08-20T13:10:33.230Z",
+    "created": "2026-08-21T09:59:03.719Z",
     "creators": [
-      "Tool: npm/cli-11.14.1"
+      "Tool: npm/cli-10.9.8"
     ]
   },
   "documentDescribes": [
-    "SPDXRef-Package-studip-timesheet-0.0.2"
+    "SPDXRef-Package-studip-timesheet-0.1.0"
   ],
   "packages": [
     {
       "name": "studip-timesheet",
-      "SPDXID": "SPDXRef-Package-studip-timesheet-0.0.2",
-      "versionInfo": "0.0.2",
+      "SPDXID": "SPDXRef-Package-studip-timesheet-0.1.0",
+      "versionInfo": "0.1.0",
       "packageFileName": "",
       "primaryPackagePurpose": "LIBRARY",
       "downloadLocation": "NOASSERTION",
@@ -28,7 +28,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/studip-timesheet@0.0.2"
+          "referenceLocator": "pkg:npm/studip-timesheet@0.1.0"
         }
       ]
     },
@@ -88,7 +88,7 @@
       "description": "Validate identifier/keywords name",
       "downloadLocation": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-8.0.4.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/babel/babel#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -184,7 +184,7 @@
       "description": "Validate identifier/keywords name",
       "downloadLocation": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.29.7.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/babel/babel#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -304,7 +304,7 @@
       "description": "Resolve a URI relative to an optional base URI",
       "downloadLocation": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/jridgewell/resolve-uri#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -400,7 +400,7 @@
       "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "downloadLocation": "https://registry.npmjs.org/@parcel/watcher/-/watcher-2.6.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/parcel-bundler/watcher#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -424,7 +424,7 @@
       "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "downloadLocation": "https://registry.npmjs.org/@parcel/watcher-linux-x64-glibc/-/watcher-linux-x64-glibc-2.6.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/parcel-bundler/watcher#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -448,7 +448,7 @@
       "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "downloadLocation": "https://registry.npmjs.org/@parcel/watcher-linux-x64-musl/-/watcher-linux-x64-musl-2.6.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/parcel-bundler/watcher#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -591,7 +591,7 @@
       "description": "TypeScript definitions for jsesc",
       "downloadLocation": "https://registry.npmjs.org/@types/jsesc/-/jsesc-2.5.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -663,7 +663,7 @@
       "description": "TypeScript definitions for parse5",
       "downloadLocation": "https://registry.npmjs.org/@types/parse5/-/parse5-5.0.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -830,7 +830,7 @@
       "packageFileName": "node_modules/@vue/devtools-api",
       "downloadLocation": "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-8.2.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/vuejs/devtools#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -853,7 +853,7 @@
       "packageFileName": "node_modules/@vue/devtools-kit",
       "downloadLocation": "https://registry.npmjs.org/@vue/devtools-kit/-/devtools-kit-8.2.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/vuejs/devtools#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -876,7 +876,7 @@
       "packageFileName": "node_modules/@vue/devtools-shared",
       "downloadLocation": "https://registry.npmjs.org/@vue/devtools-shared/-/devtools-shared-8.2.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/vuejs/devtools#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1044,7 +1044,7 @@
       "description": "Turn a function into an `http.Agent` instance",
       "downloadLocation": "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/TooTallNate/node-agent-base#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1068,7 +1068,7 @@
       "description": "Guarantees an array back",
       "downloadLocation": "https://registry.npmjs.org/array-back/-/array-back-6.2.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/75lb/array-back#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1188,7 +1188,7 @@
       "description": "Match balanced character pairs, like \"{\" and \"}\"",
       "downloadLocation": "https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/juliangruber/balanced-match#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1236,7 +1236,7 @@
       "description": "Brace expansion as known from sh/bash",
       "downloadLocation": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/juliangruber/brace-expansion#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1356,7 +1356,7 @@
       "description": "concatenative mapdashery",
       "downloadLocation": "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/substack/node-concat-map#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1380,7 +1380,7 @@
       "description": "Compact YAML, TOML, JSONC, JSON5 and INI parser and serializer",
       "downloadLocation": "https://registry.npmjs.org/confbox/-/confbox-0.2.4.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/confbox#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1404,7 +1404,7 @@
       "description": "Create and parse HTTP Content-Type header",
       "downloadLocation": "https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/jshttp/content-type#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1428,7 +1428,7 @@
       "description": "Just a CSS selector parser.",
       "downloadLocation": "https://registry.npmjs.org/css-selector-parser/-/css-selector-parser-1.4.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/mdevils/css-selector-parser#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1452,7 +1452,7 @@
       "description": "Strict TypeScript and Flow types for style based on MDN data",
       "downloadLocation": "https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/frenic/csstype#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1476,7 +1476,7 @@
       "description": "Lightweight debugging utility for Node.js and the browser",
       "downloadLocation": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/debug-js/debug#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1524,7 +1524,7 @@
       "description": "Node.js module to detect the C standard library (libc) implementation family and version",
       "downloadLocation": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/lovell/detect-libc#readme",
       "licenseDeclared": "Apache-2.0",
       "externalRefs": [
         {
@@ -1572,7 +1572,7 @@
       "description": "Convert encodings, uses iconv-lite",
       "downloadLocation": "https://registry.npmjs.org/encoding/-/encoding-0.1.13.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/andris9/encoding#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1596,7 +1596,7 @@
       "description": "Encode & decode XML and HTML entities with ease & speed",
       "downloadLocation": "https://registry.npmjs.org/entities/-/entities-7.0.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/fb55/entities#readme",
       "licenseDeclared": "BSD-2-Clause",
       "externalRefs": [
         {
@@ -1716,7 +1716,7 @@
       "description": "Traverse an ESTree-compliant AST",
       "downloadLocation": "https://registry.npmjs.org/estree-walker/-/estree-walker-2.0.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/Rich-Harris/estree-walker#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1740,7 +1740,7 @@
       "description": "Module resolution utilities based on Node.js upstream implementation.",
       "downloadLocation": "https://registry.npmjs.org/exsolve/-/exsolve-1.1.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/exsolve#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1788,7 +1788,7 @@
       "description": "Replace or remove multiple items in an array.",
       "downloadLocation": "https://registry.npmjs.org/find-replace/-/find-replace-5.0.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/75lb/find-replace#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1836,7 +1836,7 @@
       "description": "A library to create readable \"multipart/form-data\" streams. Can be used to submit forms and file uploads to other web applications.",
       "downloadLocation": "https://registry.npmjs.org/form-data/-/form-data-4.0.6.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/form-data/form-data#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1860,7 +1860,7 @@
       "description": "Use node's fs.realpath, but fall back to the JS implementation if the native one fails",
       "downloadLocation": "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/fs.realpath#readme",
       "licenseDeclared": "ISC",
       "externalRefs": [
         {
@@ -1956,7 +1956,7 @@
       "description": "Gettext extractor for JavaScript, TypeScript, JSX and HTML",
       "downloadLocation": "https://registry.npmjs.org/gettext-extractor/-/gettext-extractor-3.8.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/lukasgeiter/gettext-extractor#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -1980,7 +1980,7 @@
       "description": "Extend gettext-extractor with the possibility to parse Vue single file components",
       "downloadLocation": "https://registry.npmjs.org/gettext-extractor-vue/-/gettext-extractor-vue-5.2.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://gitlab.com/gitlab-org/frontend/gettext-extractor-vue#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2052,7 +2052,7 @@
       "description": "a little globber",
       "downloadLocation": "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/node-glob#readme",
       "licenseDeclared": "ISC",
       "externalRefs": [
         {
@@ -2076,7 +2076,103 @@
       "description": "a glob matcher in javascript",
       "downloadLocation": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/minimatch#readme",
+      "licenseDeclared": "ISC",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/minimatch@3.1.5"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "5608d652c9e74fa9fe35493a799abbef37857695b62d60f33facc51ab09b1d789836e9790f3aa4d871d0e6e147d83356e576e9f3e8d5cda78db7de2cb04125e3"
+        }
+      ]
+    },
+    {
+      "name": "balanced-match",
+      "SPDXID": "SPDXRef-Package-balanced-match-1.0.2",
+      "versionInfo": "1.0.2",
+      "packageFileName": "node_modules/gettext-extractor/node_modules/balanced-match",
+      "description": "Match balanced character pairs, like \"{\" and \"}\"",
+      "downloadLocation": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+      "filesAnalyzed": false,
+      "homepage": "https://github.com/juliangruber/balanced-match",
+      "licenseDeclared": "MIT",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/balanced-match@1.0.2"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "de849e50ed13315ebb84dd4099b5ec2b8c9aa94eed8e21e56f144364ea47d0a5bdf82797e1b440697d009f1b74b71d8cae94695b041a3f02252121098585393f"
+        }
+      ]
+    },
+    {
+      "name": "brace-expansion",
+      "SPDXID": "SPDXRef-Package-brace-expansion-1.1.18",
+      "versionInfo": "1.1.18",
+      "packageFileName": "node_modules/gettext-extractor/node_modules/brace-expansion",
+      "description": "Brace expansion as known from sh/bash",
+      "downloadLocation": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.18.tgz",
+      "filesAnalyzed": false,
+      "homepage": "https://github.com/juliangruber/brace-expansion",
+      "licenseDeclared": "MIT",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/brace-expansion@1.1.18"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "11d7a9fd7f5f1aa54d9b328156c0d820eb43fb3d6db9ecd5ef42c18dd0acb7d4eabbbea5b27bd1899ea84e27359fefc12305fa4031803bde0f3783764800efb7"
+        }
+      ]
+    },
+    {
+      "name": "glob",
+      "SPDXID": "SPDXRef-Package-glob-7.2.3",
+      "versionInfo": "7.2.3",
+      "packageFileName": "node_modules/gettext-extractor/node_modules/glob",
+      "description": "a little globber",
+      "downloadLocation": "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz",
+      "filesAnalyzed": false,
+      "homepage": "https://github.com/isaacs/node-glob#readme",
+      "licenseDeclared": "ISC",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/glob@7.2.3"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "9c5474ccba54d9809a471c28089bcbe94bc21f6245c85548bf04cbb087f6d40b8794cb240358614dd93e2e5609b4e958b7dbfa76fb330f604646a04bfa240af5"
+        }
+      ]
+    },
+    {
+      "name": "minimatch",
+      "SPDXID": "SPDXRef-Package-minimatch-3.1.5",
+      "versionInfo": "3.1.5",
+      "packageFileName": "node_modules/gettext-extractor/node_modules/minimatch",
+      "description": "a glob matcher in javascript",
+      "downloadLocation": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz",
+      "filesAnalyzed": false,
+      "homepage": "https://github.com/isaacs/minimatch#readme",
       "licenseDeclared": "ISC",
       "externalRefs": [
         {
@@ -2124,7 +2220,7 @@
       "description": "the most correct and second fastest glob implementation in JavaScript",
       "downloadLocation": "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/node-glob#readme",
       "licenseDeclared": "BlueOak-1.0.0",
       "externalRefs": [
         {
@@ -2244,7 +2340,7 @@
       "description": "Awaitable hook system",
       "downloadLocation": "https://registry.npmjs.org/hookable/-/hookable-5.5.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/hookable#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2268,7 +2364,7 @@
       "description": "An HTTP(s) proxy `http.Agent` implementation for HTTPS",
       "downloadLocation": "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/TooTallNate/node-https-proxy-agent#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2364,7 +2460,7 @@
       "description": "Browser-friendly inheritance fully compatible with standard node.js inherits()",
       "downloadLocation": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/inherits#readme",
       "licenseDeclared": "ISC",
       "externalRefs": [
         {
@@ -2532,7 +2628,7 @@
       "description": "A CSS parser, transformer, and minifier written in Rust",
       "downloadLocation": "https://registry.npmjs.org/lightningcss/-/lightningcss-1.33.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/parcel-bundler/lightningcss#readme",
       "licenseDeclared": "MPL-2.0",
       "externalRefs": [
         {
@@ -2556,7 +2652,7 @@
       "description": "A CSS parser, transformer, and minifier written in Rust",
       "downloadLocation": "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.33.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/parcel-bundler/lightningcss#readme",
       "licenseDeclared": "MPL-2.0",
       "externalRefs": [
         {
@@ -2580,7 +2676,7 @@
       "description": "A CSS parser, transformer, and minifier written in Rust",
       "downloadLocation": "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.33.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/parcel-bundler/lightningcss#readme",
       "licenseDeclared": "MPL-2.0",
       "externalRefs": [
         {
@@ -2604,7 +2700,7 @@
       "description": "A zero-dependency alternative to cosmiconfig",
       "downloadLocation": "https://registry.npmjs.org/lilconfig/-/lilconfig-3.1.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/antonk52/lilconfig#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2676,7 +2772,7 @@
       "description": "A cache object that deletes the least-recently-used items.",
       "downloadLocation": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.5.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/node-lru-cache#readme",
       "licenseDeclared": "BlueOak-1.0.0",
       "externalRefs": [
         {
@@ -2700,7 +2796,7 @@
       "description": "Modify strings, generate sourcemaps",
       "downloadLocation": "https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/Rich-Harris/magic-string#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2772,7 +2868,7 @@
       "description": "Media Type Database",
       "downloadLocation": "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/jshttp/mime-db#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2796,7 +2892,7 @@
       "description": "The ultimate javascript content-type utility.",
       "downloadLocation": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/jshttp/mime-types#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2820,7 +2916,7 @@
       "description": "a glob matcher in javascript",
       "downloadLocation": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/minimatch#readme",
       "licenseDeclared": "BlueOak-1.0.0",
       "externalRefs": [
         {
@@ -2844,7 +2940,7 @@
       "description": "minimal implementation of a PassThrough stream",
       "downloadLocation": "https://registry.npmjs.org/minipass/-/minipass-7.1.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/minipass#readme",
       "licenseDeclared": "BlueOak-1.0.0",
       "externalRefs": [
         {
@@ -2868,7 +2964,7 @@
       "description": "Missing ECMAScript module utils for Node.js",
       "downloadLocation": "https://registry.npmjs.org/mlly/-/mlly-1.8.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/mlly#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2892,7 +2988,7 @@
       "description": "Compact and high quality YAML, TOML, JSONC and JSON5 parsers",
       "downloadLocation": "https://registry.npmjs.org/confbox/-/confbox-0.1.8.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/confbox#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2916,7 +3012,7 @@
       "description": "Node.js utilities and TypeScript definitions for `package.json` and `tsconfig.json`",
       "downloadLocation": "https://registry.npmjs.org/pkg-types/-/pkg-types-1.3.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/pkg-types#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2940,7 +3036,7 @@
       "description": "Tiny millisecond conversion utility",
       "downloadLocation": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/vercel/ms#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2963,7 +3059,7 @@
       "packageFileName": "node_modules/muggle-string",
       "downloadLocation": "https://registry.npmjs.org/muggle-string/-/muggle-string-0.4.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/johnsoncodehk/muggle-string#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -2987,7 +3083,7 @@
       "description": "A tiny (116 bytes), secure URL-friendly unique string ID generator",
       "downloadLocation": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.18.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/ai/nanoid#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3059,7 +3155,7 @@
       "description": "Run a function exactly one time",
       "downloadLocation": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/once#readme",
       "licenseDeclared": "ISC",
       "externalRefs": [
         {
@@ -3107,7 +3203,7 @@
       "description": "Node.js 0.12 path.isAbsolute() ponyfill",
       "downloadLocation": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/sindresorhus/path-is-absolute#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3131,7 +3227,7 @@
       "description": "walk paths fast and efficiently",
       "downloadLocation": "https://registry.npmjs.org/path-scurry/-/path-scurry-2.0.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/isaacs/path-scurry#readme",
       "licenseDeclared": "BlueOak-1.0.0",
       "externalRefs": [
         {
@@ -3155,7 +3251,7 @@
       "description": "Universal filesystem path utils",
       "downloadLocation": "https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/pathe#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3178,7 +3274,7 @@
       "packageFileName": "node_modules/perfect-debounce",
       "downloadLocation": "https://registry.npmjs.org/perfect-debounce/-/perfect-debounce-2.1.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/perfect-debounce#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3202,7 +3298,7 @@
       "description": "The tiniest and the fastest library for terminal output formatting with ANSI colors",
       "downloadLocation": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/alexeyraspopov/picocolors#readme",
       "licenseDeclared": "ISC",
       "externalRefs": [
         {
@@ -3274,7 +3370,7 @@
       "description": "Node.js utilities and TypeScript definitions for `package.json` and `tsconfig.json`",
       "downloadLocation": "https://registry.npmjs.org/pkg-types/-/pkg-types-2.3.1.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/pkg-types#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3298,7 +3394,7 @@
       "description": "Pluralize and singularize any word",
       "downloadLocation": "https://registry.npmjs.org/pluralize/-/pluralize-8.0.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/blakeembrey/pluralize#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3466,7 +3562,7 @@
       "description": "Modern Buffer API polyfill without footguns",
       "downloadLocation": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/ChALkeR/safer-buffer#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3538,7 +3634,7 @@
       "description": "String case utils",
       "downloadLocation": "https://registry.npmjs.org/scule/-/scule-1.3.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/scule#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3634,7 +3730,7 @@
       "description": "Isomorphic, functional type-checking for Javascript",
       "downloadLocation": "https://registry.npmjs.org/typical/-/typical-7.3.0.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/75lb/typical#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3658,7 +3754,7 @@
       "description": "URL utils for humans",
       "downloadLocation": "https://registry.npmjs.org/ufo/-/ufo-1.6.4.tgz",
       "filesAnalyzed": false,
-      "homepage": "NOASSERTION",
+      "homepage": "https://github.com/unjs/ufo#readme",
       "licenseDeclared": "MIT",
       "externalRefs": [
         {
@@ -3941,72 +4037,72 @@
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DESCRIBES"
     },
     {
       "spdxElementId": "SPDXRef-Package-pinia-4.0.3",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vue-3.5.41",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vue-router-5.2.0",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-redocly.cli-2.40.0",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitejs.plugin-vue-6.0.8",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-gettext-extractor-vue-5.2.0",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-gettext-parser-9.1.1",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-glob-13.0.6",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-kitsu-11.1.0",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-sass-1.103.0",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-sass-loader-17.0.0",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vite-8.2.2",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vue3-gettext-4.0.1",
-      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.0.2",
+      "relatedSpdxElement": "SPDXRef-Package-studip-timesheet-0.1.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {

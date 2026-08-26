@@ -1,7 +1,7 @@
 {
     "name": "studip-timesheet",
     "private": true,
-    "version": "0.0.2",
+    "version": "0.1.0",
     "author": "Ron Lucke <lucke@elan-ev.de> (elan e.V.)",
     "contributors": [
         "Ron Lucke <lucke@elan-ev.de> (elan e.V.)",
@@ -50,6 +50,7 @@
         "gettext-parser": "9.1.1",
         "glob": "13.0.6",
         "kitsu": "11.1.0",
+        "primevue": "4.5.5",
         "sass": "1.103.0",
         "sass-loader": "17.0.0",
         "vite": "8.2.2",

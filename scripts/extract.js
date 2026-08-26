@@ -15,7 +15,6 @@ const files = globSync('src/**/*.{vue,js}');
 files.forEach(file => {
     const content = fs.readFileSync(file, 'utf8');
     jsParser.parseString(content, file);
-    // const regex = /\$gettext\(\s*['"](.*?)['"](?=[\s,)]|$)/gs;
     const regex = /\$gettext\(\s*['"](.*?)['"]\s*(?=[,)])/gs;
     let match;
     while ((match = regex.exec(content)) !== null) {
