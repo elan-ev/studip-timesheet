@@ -44,7 +44,7 @@ final class InitTimesheetTables extends Migration
                 `start_date`                    INT(11) NOT NULL,
                 `end_date`                      INT(11) NOT NULL,
                 `half_hours_first_month`        TINYINT(1) NOT NULL DEFAULT 0,
-                `half_hours_last_month`        TINYINT(1) NOT NULL DEFAULT 0,
+                `half_hours_last_month`         TINYINT(1) NOT NULL DEFAULT 0,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,
 
@@ -87,6 +87,7 @@ final class InitTimesheetTables extends Migration
                 `date`                          INT(11) NOT NULL,
                 `start_time`                    INT(11) NOT NULL,
                 `end_time`                      INT(11) NOT NULL,
+                `break_start`                   INT(11) NOT NULL,
                 `break_duration`                INT(11) NOT NULL,
                 `absence_type`                  ENUM('work','sick','vacation','holiday','maternity') CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
                 `comment`                       MEDIUMTEXT DEFAULT NULL,
