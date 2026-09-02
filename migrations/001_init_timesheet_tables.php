@@ -25,7 +25,7 @@ final class InitTimesheetTables extends Migration
                 `id`                            INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id`                       CHAR(32) NOT NULL,
                 `institute_id`                  CHAR(32) NOT NULL,
-                `role`                          ENUM('admin','supervisor') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+                `role`                          ENUM('superadmin','admin','supervisor') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,
 
@@ -44,6 +44,7 @@ final class InitTimesheetTables extends Migration
                 `start_date`                    INT(11) NOT NULL,
                 `end_date`                      INT(11) NOT NULL,
                 `half_hours_first_month`        TINYINT(1) NOT NULL DEFAULT 0,
+                `half_hours_last_month`        TINYINT(1) NOT NULL DEFAULT 0,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,
 
