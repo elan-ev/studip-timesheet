@@ -49,7 +49,9 @@ class Create extends JsonApiController
         $json = $this->validate($request);
         $user = $this->getUser($request);
 
-        if (!Authority::canCreateContract($user)) {
+        $instituteId = self::arrayGet($json, 'data.attributes.institute-id');
+
+        if (!Authority::canCreateContract($user, $instituteId)) {
             throw new AuthorizationFailedException();
         }
 

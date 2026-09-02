@@ -22,6 +22,7 @@ trait Routes
     {
         // Contracts.
         $group->get('/timesheet-contracts', \StudipTimesheet\JsonApi\Routes\Contract\Index::class);
+        $group->get('/institutes/{id}/timesheet-contracts', \StudipTimesheet\JsonApi\Routes\Contract\IndexByInstitute::class);
         $group->get('/timesheet-contracts/{id}', \StudipTimesheet\JsonApi\Routes\Contract\Show::class);
         $group->post('/timesheet-contracts', \StudipTimesheet\JsonApi\Routes\Contract\Create::class);
         $group->patch('/timesheet-contracts/{id}', \StudipTimesheet\JsonApi\Routes\Contract\Update::class);

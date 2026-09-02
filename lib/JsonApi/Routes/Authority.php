@@ -24,21 +24,24 @@ use User;
 
 class Authority
 {
-    const ADMIN_ROLE = 'TimesheetPlugin_Admin';
-    const INST_ADMIN_ROLE = 'TimesheetPlugin_Institute_Admin';
-
-    private static function isRootOrAdmin(User $user, string $instId): bool
+    private static function isGlobalAdmin(User $user): bool
     {
         $isRoot = $GLOBALS['perm']->have_perm('root', $user->id);
-
         $isAdmin = Permission::hasAssignedRole($user->id, Permission::ROLE_SUPERADMIN);
+
+        return $isRoot || $isAdmin;
+    }
+
+    private static function isAdmin(User $user, string $instId): bool
+    {
+        $isGlobalAdmin = self::isGlobalAdmin($user);
 
         $isInstAdmin = false;
         if (!empty($instId)) {
             $isInstAdmin = Permission::hasAssignedRole($user->id, Permission::ROLE_ADMIN, $instId);
         }
 
-        return $isRoot || $isAdmin || $isInstAdmin;
+        return  $isGlobalAdmin || $isInstAdmin;
     }
 
     private static function isSupervisor(User $user, ?string $instId = null, ?string $contractId = null )
@@ -52,27 +55,32 @@ class Authority
 
     public static function canCreateContract(User $user, string $instId): bool
     {
-        return self::isRootOrAdmin($user, $instId);
+        return self::isAdmin($user, $instId);
     }
 
     public static function canUpdateContract(User $user, string $instId): bool
     {
-        return self::isRootOrAdmin($user, $instId);
+        return self::isAdmin($user, $instId);
     }
 
     public static function canDeleteContract(User $user, string $instId): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isAdmin($user, $instId);
     }
 
-    public static function canIndexContract(User $user, string $instId): bool
+    public static function canIndexContract(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isGlobalAdmin($user);
+    }
+
+    public static function canIndexContractForInstitute(User $user, string $instId): bool
+    {
+        return self::isAdmin($user, $instId);
     }
 
     public static function canShowContract(User $user, Contract $resource): bool
     {
-        return self::isRootOrAdmin($user) || $resource->employee_id == $user->id;
+        return self::isAdmin($user, $resource->institute_id) || $resource->employee_id == $user->id;
     }
 
     public static function canCreatePermission(User $user): bool
@@ -100,128 +108,136 @@ class Authority
         return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
-    public static function canCreateSupervisor(User $user, string $instId): bool
+    public static function canCreateSupervisor(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isAdmin($user, $contract->institute_id);
     }
 
-    public static function canDeleteSupervisor(User $user, string $instId): bool
+    public static function canDeleteSupervisor(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isAdmin($user, $contract->institute_id);
     }
 
-    public static function canIndexSupervisor(User $user, string $instId): bool
+    public static function canIndexSupervisor(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isGlobalAdmin($user);
     }
 
-    public static function canShowSupervisor(User $user, string $instId): bool
+    public static function canShowSupervisor(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isAdmin($user, $contract->institute_id);
     }
 
     public static function canUpdateSupervisor(User $user, string $instId): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isAdmin($user, $instId);
     }
 
-    public static function canIndexRecord(User $user, string $instId, string $contractId): bool
+    public static function canIndexRecord(User $user): bool
     {
-        return self::isRootOrAdmin($user) || self::isSupervisor($user, $instId, $contractId);
+        return self::isGlobalAdmin($user);
     }
 
     public static function canCreateRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canDeleteRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canShowRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user)|| self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee->id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id)|| self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canUpdateRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canCreateSheet(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user) || $contract->employee->id === $user->id;
+        return self::isAdmin($user, $contract->institute_id) || $contract->employee->id === $user->id;
     }
 
     public static function canDeleteSheet(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user) || $contract->employee->id === $user->id;
+        return self::isAdmin($user, $contract->institute_id) || $contract->employee->id === $user->id;
     }
 
     public static function canShowSheet(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user, $sheet->contract->institute_id) || self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id) || self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
     }
 
     public static function canUpdateSheet(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user, $sheet->contract->institute_id)|| self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id)|| self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
     }
 
     public static function canIndexSheet(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isGlobalAdmin($user);
     }
 
     public static function canIndexSheetRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
+        return self::isAdmin($user, $sheet->contract->institute_id) || self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
     }
 
     public static function canIndexContractSheet(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user, $contract->institute_id) || self::isSupervisor($user, $contract->institute_id, $contract->id) || $contract->employee_id === $user->id;
+        return self::isAdmin($user, $contract->institute_id) || self::isSupervisor($user, $contract->institute_id, $contract->id) || $contract->employee_id === $user->id;
     }
 
     public static function canCreateWorkflowLog(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return false;
+        // return self::isGlobalAdmin($user);
     }
 
     public static function canCreateSheetWorkflowLog(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return false;
+        // return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canDeleteWorkflowLog(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return false;
+        // return self::isGlobalAdmin($user);
     }
 
     public static function canIndexWorkflowLogs(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return false;
+        // return self::isGlobalAdmin($user);
     }
 
     public static function canIndexSheetWorkflowLogs(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return false;
+        // return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canShowWorkflowLog(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return false;
+        // return self::isGlobalAdmin($user);
     }
 
     public static function canShowSheetWorkflowLog(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return false;
+        // return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canUpdateWorkflowLog(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return false;
+        // return self::isAdmin($user, $sheet->contract->institute_id) || $sheet->contract->employee->id === $user->id;
     }
 }

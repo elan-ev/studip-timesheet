@@ -37,14 +37,16 @@ class ContractSupervisorDelete extends JsonApiController
     {
         $user = $this->getUser($request);
 
-        if (!Authority::canDeleteSupervisor($user)) {
-            throw new AuthorizationFailedException();
-        }
-
         $contract = Contract::find($args['contract_id']);
         if (!$contract || empty($contract->supervisors)) {
             throw new RecordNotFoundException();
         }
+
+        if (!Authority::canDeleteSupervisor($user, $contract)) {
+            throw new AuthorizationFailedException();
+        }
+
+
 
         [$contractId, $userId] = explode('_', $args['id']);
         $supervisorList = $contract->supervisors->findOneBySql('contract_id = ? AND user_id = ?', [$contractId, $userId]);

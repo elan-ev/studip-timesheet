@@ -55,7 +55,7 @@ class ContractSupervisorCreate extends JsonApiController
             throw new RecordNotFoundException();
         }
 
-        if (!Authority::canCreateSupervisor($user)) {
+        if (!Authority::canCreateSupervisor($user, $contract)) {
             throw new AuthorizationFailedException();
         }
 

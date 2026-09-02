@@ -50,13 +50,13 @@ class Update extends JsonApiController
         $json = $this->validate($request);
         $user = $this->getUser($request);
 
-        if (!Authority::canUpdateContract($user)) {
-            throw new AuthorizationFailedException();
-        }
-
         $contract = Contract::find($args['id']);
         if (!$contract) {
             throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canUpdateContract($user, $contract->institute_id)) {
+            throw new AuthorizationFailedException();
         }
 
         $contract = $this->updateContract($json, $contract);

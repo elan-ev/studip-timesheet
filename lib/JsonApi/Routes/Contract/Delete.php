@@ -37,13 +37,13 @@ class Delete extends JsonApiController
     {
         $user = $this->getUser($request);
 
-        if (!Authority::canDeleteContract($user)) {
-            throw new AuthorizationFailedException();
-        }
-
         $contract = Contract::find($args['id']);
         if (!$contract) {
             throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canDeleteContract($user, $contract->institute_id)) {
+            throw new AuthorizationFailedException();
         }
 
         $contract->delete();

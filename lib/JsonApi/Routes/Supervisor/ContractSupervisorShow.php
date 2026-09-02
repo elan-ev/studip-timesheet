@@ -56,7 +56,12 @@ class ContractSupervisorShow extends JsonApiController
             throw new RecordNotFoundException();
         }
 
-        if (!Authority::canShowSupervisor($user)) {
+        $contract = Contract::find($contractId);
+        if (!$contract) {
+            throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canShowSupervisor($user, $contract)) {
             throw new AuthorizationFailedException();
         }
 
