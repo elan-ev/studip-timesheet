@@ -26,10 +26,12 @@ use Institute;
 
 class Permission extends SimpleORMap
 {
+    const ROLE_SUPERADMIN = 'superadmin';
     const ROLE_ADMIN = 'admin';
     const ROLE_SUPERVISOR = 'supervisor';
 
     const ROLES = [
+        self::ROLE_SUPERADMIN,
         self::ROLE_ADMIN,
         self::ROLE_SUPERVISOR,
     ];
@@ -54,5 +56,12 @@ class Permission extends SimpleORMap
     public static function getAll(): array
     {
         return self::findBySQL('1');
+    }
+
+    public static function hasAssignedRole($user_id, $role, $instId = null) : bool
+    {
+        // return self::findBySQL();
+
+        return false;
     }
 }

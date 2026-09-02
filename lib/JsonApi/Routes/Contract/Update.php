@@ -111,6 +111,7 @@ class Update extends JsonApiController
         $startDate = self::arrayGet($json, 'data.attributes.start-date');
         $endDate = self::arrayGet($json, 'data.attributes.end-date');
         $halfHoursFirstMonth = self::arrayGet($json, 'data.attributes.half-hours-first-month', false);
+        $halfHoursLastMonth = self::arrayGet($json, 'data.attributes.half-hours-last-month', false);
 
         $contract->type = $type;
         $contract->predecessor_id = $predecessorId;
@@ -119,6 +120,7 @@ class Update extends JsonApiController
         $contract->start_date = !empty($startDate) ? strtotime($startDate) : 0;
         $contract->end_date = !empty($endDate) ? strtotime($endDate) : 0;
         $contract->half_hours_first_month = $halfHoursFirstMonth;
+        $contract->half_hours_last_month = $halfHoursLastMonth;
         $contract->store();
 
         return $contract;

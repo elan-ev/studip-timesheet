@@ -24,7 +24,7 @@ final class InitTimesheetTables extends Migration
         $db->exec("CREATE TABLE IF NOT EXISTS `timesheet_permissions` (
                 `id`                            INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id`                       CHAR(32) NOT NULL,
-                `institute_id`                  CHAR(32) NOT NULL,
+                `institute_id`                  CHAR(32),
                 `role`                          ENUM('superadmin','admin','supervisor') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,

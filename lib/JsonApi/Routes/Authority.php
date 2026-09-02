@@ -17,45 +17,55 @@ namespace StudipTimesheet\JsonApi\Routes;
 use StudipTimesheet\Models\Contract;
 use StudipTimesheet\Models\Sheet;
 use StudipTimesheet\Models\WorkflowLog;
+use StudipTimesheet\Models\Permission;
+use StudipTimesheet\Models\Supervisor;
 
 use User;
-use RolePersistence;
 
 class Authority
 {
     const ADMIN_ROLE = 'TimesheetPlugin_Admin';
     const INST_ADMIN_ROLE = 'TimesheetPlugin_Institute_Admin';
 
-    private static function isRootOrAdmin(User $user, ?string $instId = null): bool
+    private static function isRootOrAdmin(User $user, string $instId): bool
     {
         $isRoot = $GLOBALS['perm']->have_perm('root', $user->id);
 
-        $isAdmin = RolePersistence::isAssignedRole($user->id, self::ADMIN_ROLE);
+        $isAdmin = Permission::hasAssignedRole($user->id, Permission::ROLE_SUPERADMIN);
 
         $isInstAdmin = false;
         if (!empty($instId)) {
-            $isInstAdmin = RolePersistence::isAssignedRole($user->id, self::INST_ADMIN_ROLE, $instId);
+            $isInstAdmin = Permission::hasAssignedRole($user->id, Permission::ROLE_ADMIN, $instId);
         }
 
         return $isRoot || $isAdmin || $isInstAdmin;
     }
 
-    public static function canCreateContract(User $user): bool
+    private static function isSupervisor(User $user, ?string $instId = null, ?string $contractId = null )
+    {
+
+        $isContractSupervisor = $contractId ?? Supervisor::userIsSupervisor($contractId);
+        $isInstSupervisor = $instId ?? Permission::hasAssignedRole($user->id, Permission::ROLE_SUPERVISOR, $instId);
+
+        return $isContractSupervisor || $isInstSupervisor;
+    }
+
+    public static function canCreateContract(User $user, string $instId): bool
+    {
+        return self::isRootOrAdmin($user, $instId);
+    }
+
+    public static function canUpdateContract(User $user, string $instId): bool
+    {
+        return self::isRootOrAdmin($user, $instId);
+    }
+
+    public static function canDeleteContract(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
 
-    public static function canUpdateContract(User $user): bool
-    {
-        return self::isRootOrAdmin($user);
-    }
-
-    public static function canDeleteContract(User $user): bool
-    {
-        return self::isRootOrAdmin($user);
-    }
-
-    public static function canIndexContract(User $user): bool
+    public static function canIndexContract(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
@@ -67,57 +77,57 @@ class Authority
 
     public static function canCreatePermission(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
     public static function canDeletePermission(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
     public static function canIndexPermission(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
     public static function canShowPermission(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
     public static function canUpdatePermission(User $user): bool
     {
-        return self::isRootOrAdmin($user);
+        return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
-    public static function canCreateSupervisor(User $user): bool
+    public static function canCreateSupervisor(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
 
-    public static function canDeleteSupervisor(User $user): bool
+    public static function canDeleteSupervisor(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
 
-    public static function canIndexSupervisor(User $user): bool
+    public static function canIndexSupervisor(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
 
-    public static function canShowSupervisor(User $user): bool
+    public static function canShowSupervisor(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
 
-    public static function canUpdateSupervisor(User $user): bool
+    public static function canUpdateSupervisor(User $user, string $instId): bool
     {
         return self::isRootOrAdmin($user);
     }
 
-    public static function canIndexRecord(User $user): bool
+    public static function canIndexRecord(User $user, string $instId, string $contractId): bool
     {
-        return self::isRootOrAdmin($user);
+        return self::isRootOrAdmin($user) || self::isSupervisor($user, $instId, $contractId);
     }
 
     public static function canCreateRecord(User $user, Sheet $sheet): bool
@@ -132,7 +142,7 @@ class Authority
 
     public static function canShowRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return self::isRootOrAdmin($user)|| self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee->id === $user->id;
     }
 
     public static function canUpdateRecord(User $user, Sheet $sheet): bool
@@ -150,14 +160,14 @@ class Authority
         return self::isRootOrAdmin($user) || $contract->employee->id === $user->id;
     }
 
-    public static function canShowSheet(User $user, Contract $contract): bool
+    public static function canShowSheet(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $contract->employee->id === $user->id;
+        return self::isRootOrAdmin($user, $sheet->contract->institute_id) || self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
     }
 
-    public static function canUpdateSheet(User $user, Contract $contract): bool
+    public static function canUpdateSheet(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $contract->employee->id === $user->id;
+        return self::isRootOrAdmin($user, $sheet->contract->institute_id)|| self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
     }
 
     public static function canIndexSheet(User $user): bool
@@ -167,12 +177,12 @@ class Authority
 
     public static function canIndexSheetRecord(User $user, Sheet $sheet): bool
     {
-        return self::isRootOrAdmin($user) || $sheet->contract->employee->id === $user->id;
+        return self::isRootOrAdmin($user) || self::isSupervisor($user, $sheet->contract->institute_id, $sheet->contract_id) || $sheet->contract->employee_id === $user->id;
     }
 
     public static function canIndexContractSheet(User $user, Contract $contract): bool
     {
-        return self::isRootOrAdmin($user) || $contract->employee->id === $user->id;
+        return self::isRootOrAdmin($user, $contract->institute_id) || self::isSupervisor($user, $contract->institute_id, $contract->id) || $contract->employee_id === $user->id;
     }
 
     public static function canCreateWorkflowLog(User $user): bool

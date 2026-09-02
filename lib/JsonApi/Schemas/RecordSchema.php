@@ -49,6 +49,7 @@ class RecordSchema extends \JsonApi\Schemas\SchemaProvider
             'date' => $resource['date'] ? date('Y-m-d', $resource['date']) : null,
             'start-time' => $resource['start_time'] ? date('H:i:s', $resource['start_time']) : null,
             'end-time' => $resource['end_time'] ? date('H:i:s', $resource['end_time']) : null,
+            'break-start' => $resource['break_start'] ? date('H:i:s', $resource['break_start']) : null,
             'break-duration' => (int) $resource['break_duration'],
             'absence-type' => $resource['absence_type'],
             'comment' => $resource['comment'],

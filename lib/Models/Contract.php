@@ -25,6 +25,7 @@ use Institute;
  * @property int $start_date
  * @property int $end_date
  * @property bool $half_hours_first_month
+ * @property bool $half_hours_last_month
  *
  * @property User $employee
  * @property Institute $institute

@@ -18,6 +18,7 @@ use SimpleORMap;
  * @property int $date
  * @property int $start_time
  * @property int $end_time
+ * @property int $break_start
  * @property int $break_duration
  * @property string $absence_type
  * @property string $comment

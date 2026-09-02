@@ -46,4 +46,9 @@ class Supervisor extends SimpleORMap
     {
         return self::findBySQL('1');
     }
+
+    public static function userIsSupervisor($contract_id): bool
+    {
+        return false;
+    }
 }

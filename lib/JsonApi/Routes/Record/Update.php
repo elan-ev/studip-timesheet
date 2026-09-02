@@ -87,6 +87,9 @@ class Update extends JsonApiController
         if (!self::arrayHas($json, 'data.attributes.end-time')) {
             return 'Missing `end-time` member of attributes block.';
         }
+        if (!self::arrayHas($json, 'data.attributes.break-start')) {
+            return 'Missing `break-start` member of attributes block.';
+        }
         if (!self::arrayHas($json, 'data.attributes.break-duration')) {
             return 'Missing `break-duration` member of attributes block.';
         }
@@ -108,6 +111,7 @@ class Update extends JsonApiController
         $date = self::arrayGet($json, 'data.attributes.date');
         $startTime = self::arrayGet($json, 'data.attributes.start-time');
         $endTime = self::arrayGet($json, 'data.attributes.end-time');
+        $breakStart = self::arrayGet($json, 'data.attributes.break-start');
         $breakDuration = self::arrayGet($json, 'data.attributes.break-duration', 0);
         $absenceType = self::arrayGet($json, 'data.attributes.absence-type');
         $comment = self::arrayGet($json, 'data.attributes.comment');
@@ -118,6 +122,7 @@ class Update extends JsonApiController
         $record->date = MiscHelper::datetimeStringToTimestamp($date, 0,0,1);
         $record->start_time = MiscHelper::datetimeStringToTimestamp($startDatetime);
         $record->end_time = MiscHelper::datetimeStringToTimestamp($endDatetime);
+        $record->break_start = MiscHelper::datetimeStringToTimestamp($breakStart);
         $record->break_duration = $breakDuration;
         $record->absence_type = $absenceType;
         $record->comment = $comment;

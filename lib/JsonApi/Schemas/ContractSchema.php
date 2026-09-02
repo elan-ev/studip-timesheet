@@ -54,6 +54,7 @@ class ContractSchema extends \JsonApi\Schemas\SchemaProvider
             'start-date' => $resource['start_date'] ? date('Y-m-d', $resource['start_date']) : null,
             'end-date' => $resource['end_date'] ? date('Y-m-d', $resource['end_date']) : null,
             'half-hours-first-month' => (bool) $resource['half_hours_first_month'],
+            'half-hours-last-month' => (bool) $resource['half_hours_last_month'],
         ];
     }
 
