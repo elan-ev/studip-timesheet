@@ -22,6 +22,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use StudipTimesheet\JsonApi\Routes\Authority;
 use StudipTimesheet\JsonApi\Schemas\SupervisorSchema;
 use StudipTimesheet\Models\Supervisor;
+use StudipTimesheet\Models\Contract;
 
 class Show extends JsonApiController
 {
