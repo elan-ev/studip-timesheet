@@ -60,7 +60,7 @@ class ContractSheetUpdate extends JsonApiController
             throw new RecordNotFoundException();
         }
 
-        if (!Authority::canUpdateSheet($user, $contract)) {
+        if (!Authority::canUpdateSheet($user, $sheet)) {
             throw new AuthorizationFailedException();
         }
 
