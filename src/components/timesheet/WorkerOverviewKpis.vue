@@ -45,7 +45,7 @@
                 </SuiProgressRing>
             </template>
 
-            <SuiChip label="Tutorium Informatik I" hex="#d0ebea" />
+            <SuiChip label="Tutorium Informatik A" hex="#d0ebea" />
 
             <template #footer>
                 <button class="button kpi-button">Details</button>
@@ -59,7 +59,7 @@
                 </SuiProgressRing>
             </template>
 
-            <SuiChip label="Tutorium Informatik I" hex="#d0ebea" />
+            <SuiChip label="Tutorium Informatik A" hex="#d0ebea" />
 
             <template #footer>
                 <button class="button kpi-button">Antrag stellen</button>
