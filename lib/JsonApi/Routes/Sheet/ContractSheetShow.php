@@ -53,7 +53,7 @@ class ContractSheetShow extends JsonApiController
             throw new RecordNotFoundException();
         }
 
-        if (!Authority::canShowSheet($user, $sheet->contract)) {
+        if (!Authority::canShowSheet($user, $sheet)) {
             throw new AuthorizationFailedException();
         }
 
