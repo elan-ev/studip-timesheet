@@ -21,6 +21,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use StudipTimesheet\JsonApi\Routes\Authority;
 use StudipTimesheet\Models\Supervisor;
+use StudipTimesheet\Models\Contract;
 
 class Delete extends JsonApiController
 {
@@ -37,14 +38,21 @@ class Delete extends JsonApiController
     {
         $user = $this->getUser($request);
 
-        if (!Authority::canDeleteSupervisor($user)) {
-            throw new AuthorizationFailedException();
-        }
+
 
         [$contractId, $userId] = explode('_', $args['id']);
         $supervisor = Supervisor::find([$contractId, $userId]);
         if (!$supervisor) {
             throw new RecordNotFoundException();
+        }
+
+        $contract = Contract::find($contractId);
+        if (!$contract) {
+            throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canDeleteSupervisor($user, $contract)) {
+            throw new AuthorizationFailedException();
         }
 
         $supervisor->delete();

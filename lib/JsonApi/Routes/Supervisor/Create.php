@@ -22,6 +22,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use StudipTimesheet\JsonApi\Routes\Authority;
 use StudipTimesheet\JsonApi\Schemas\SupervisorSchema;
 use StudipTimesheet\Models\Supervisor;
+use StudipTimesheet\Models\Contract;
 
 class Create extends JsonApiController
 {
@@ -48,7 +49,11 @@ class Create extends JsonApiController
         $json = $this->validate($request);
         $user = $this->getUser($request);
 
-        if (!Authority::canCreateSupervisor($user)) {
+        $contractId = self::arrayGet($json, 'data.attributes.contract-id');
+
+        $contract = Contract::find($contractId);
+
+        if (!Authority::canCreateSupervisor($user, $contract)) {
             throw new AuthorizationFailedException();
         }
 
