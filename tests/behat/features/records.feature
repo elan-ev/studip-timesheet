@@ -27,6 +27,7 @@ Feature: timesheet Records API
                     "date": "24-07-2026",
                     "start-time": "08:00:00",
                     "end-time": "16:30:00",
+                    "break-start": "12:00:00",
                     "break-duration": 30,
                     "absence-type": "work",
                     "comment": "This is a test record."
@@ -58,6 +59,7 @@ Feature: timesheet Records API
                     "date": "24-07-2026",
                     "start-time": "09:00:00",
                     "end-time": "16:30:00",
+                    "break-start": "12:00:00",
                     "break-duration": 30,
                     "absence-type": "maternity",
                     "comment": "This is an EDITED test record."
@@ -83,6 +85,7 @@ Feature: timesheet Records API
                     "date": "24-07-2026",
                     "start-time": "08:00:00",
                     "end-time": "16:30:00",
+                    "break-start": "12:00:00",
                     "break-duration": 30,
                     "absence-type": "work",
                     "comment": "This is a test record."
@@ -114,6 +117,7 @@ Feature: timesheet Records API
                     "date": "24-07-2026",
                     "start-time": "09:00:00",
                     "end-time": "16:30:00",
+                    "break-start": "12:00:00",
                     "break-duration": 40,
                     "absence-type": "maternity",
                     "comment": "This is an EDITED test record."
