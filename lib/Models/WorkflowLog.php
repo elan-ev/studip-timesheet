@@ -17,9 +17,10 @@ use User;
  * @property int $id
  * @property int $sheet_id
  * @property string $user_id
+ * @property string $object_type
  * @property string $action
- * @property int $performed_at
  * @property string $comment
+ * @property string $log_data
  *
  * @property Sheet $sheet
  * @property User $user
@@ -31,6 +32,7 @@ class WorkflowLog extends SimpleORMap
     const ACTION_SYSTEM_OVERRIDE = 'system_override';
     const ACTION_UNSUSPEND = 'unsuspend';
     const ACTION_SOFT_DELETE = 'soft_delete';
+    const ACTION_HARD_DELETE = 'hard_delete';
     const ACTION_REJECT = 'reject';
     const ACTION_APPROVED_FINAL = 'approve_final';
     const ACTION_APPROVED_CONFIRM = 'approved_confirm';

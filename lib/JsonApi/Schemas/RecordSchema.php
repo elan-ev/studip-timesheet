@@ -46,6 +46,7 @@ class RecordSchema extends \JsonApi\Schemas\SchemaProvider
     public function getAttributes($resource, ContextInterface $context): iterable
     {
         return [
+            'sheet-id' => $resource->sheet_id,
             'date' => $resource['date'] ? date('Y-m-d', $resource['date']) : null,
             'start-time' => $resource['start_time'] ? date('H:i:s', $resource['start_time']) : null,
             'end-time' => $resource['end_time'] ? date('H:i:s', $resource['end_time']) : null,

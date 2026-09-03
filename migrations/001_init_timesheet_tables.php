@@ -102,11 +102,11 @@ final class InitTimesheetTables extends Migration
                 `id`                            INT(11) NOT NULL AUTO_INCREMENT,
                 `sheet_id`                      INT(11) NOT NULL,
                 `user_id`                       CHAR(32) NOT NULL,
-                `action`                        ENUM('submit','approved_confirm','approve_final','reject','soft_delete','unsuspend','system_override','manual_unlock') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
-                `performed_at`                  INT(11) NOT NULL,
+                `object_type`                   ENUM('sheet', 'record') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+                `action`                        ENUM('submit','approved_confirm','approve_final','reject','soft_delete', 'hard_delete', 'unsuspend','system_override','manual_unlock') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `comment`                       MEDIUMTEXT DEFAULT NULL,
+                `log_data`                      MEDIUMTEXT DEFAULT NULL,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
-                `chdate`                        INT(11) UNSIGNED NOT NULL,
 
                 PRIMARY KEY (`id`)
             )"

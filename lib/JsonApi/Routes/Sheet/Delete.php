@@ -51,6 +51,8 @@ class Delete extends JsonApiController
 
         $sheet->status = Sheet::STATUS_ARCHIVED;
 
+        // TODO: Log this action! -> timesheet_workflow_logs
+    
         $sheet->store();
 
         return $this->getCodeResponse(204);

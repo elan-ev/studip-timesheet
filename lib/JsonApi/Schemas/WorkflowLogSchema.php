@@ -48,8 +48,10 @@ class WorkflowLogSchema extends \JsonApi\Schemas\SchemaProvider
     {
         return [
             'action' => $resource['action'],
-            'performed-at' => $resource['performed_at'] ? date('Y-m-d H:i:s', $resource['performed_at']) : null,
+            'object-type' => $resource['object_type'],
             'comment' => $resource['comment'],
+            'log-data' => $resource['log_data'],
+            'date' => $resource['mkdate'] ? date('Y-m-d H:i:s', $resource['mkdate']) : null,
         ];
     }
 

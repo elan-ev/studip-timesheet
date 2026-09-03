@@ -51,6 +51,8 @@ class SheetRecordDelete extends JsonApiController
             throw new AuthorizationFailedException();
         }
 
+        // TODO: Log this action! -> timesheet_workflow_logs
+
         $record->delete();
 
         return $this->getCodeResponse(204);

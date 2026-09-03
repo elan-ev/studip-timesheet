@@ -66,6 +66,8 @@ class ContractSheetUpdate extends JsonApiController
 
         $sheet = $this->updateSheet($json, $sheet);
 
+        // TODO: Log this action! -> timesheet_workflow_logs
+
         return $this->getCreatedResponse($sheet);
     }
 
