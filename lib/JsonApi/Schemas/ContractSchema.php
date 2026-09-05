@@ -48,6 +48,8 @@ class ContractSchema extends \JsonApi\Schemas\SchemaProvider
     public function getAttributes($resource, ContextInterface $context): iterable
     {
         return [
+            'institute-id' => $resource['institute_id'],
+            'employee-id' => $resource['employee_id'],
             'type'  => $resource['type'],
             'label' => $resource['label'],
             'hours-per-month' => (int) $resource['hours_per_month'],
@@ -77,81 +79,6 @@ class ContractSchema extends \JsonApi\Schemas\SchemaProvider
         }
 
         return $builder->getRelationships();
-        // $relationships = [];
-
-        // $relationships = $this->addEmployeeRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_EMPLOYEE)
-        // );
-
-        // $relationships = $this->addInstituteRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_INSTITUTE)
-        // );
-
-        // $relationships = $this->addPredecessorRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_PREDECESSOR)
-        // );
-
-        // return $relationships;
-    }
-
-    private function addEmployeeRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $employee = $resource->employee;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($employee),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $employee;
-        }
-
-        $relationships[self::REL_EMPLOYEE] = $relation;
-
-        return $relationships;
-    }
-
-    private function addInstituteRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $institute = $resource->institute;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($institute),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $institute;
-        }
-
-        $relationships[self::REL_INSTITUTE] = $relation;
-
-        return $relationships;
-    }
-
-    private function addPredecessorRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $predecessor = $resource->predecessor;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($predecessor),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $predecessor;
-        }
-
-        $relationships[self::REL_PREDECESSOR] = $relation;
-
-        return $relationships;
     }
 
     /**

@@ -71,57 +71,6 @@ class WorkflowLogSchema extends \JsonApi\Schemas\SchemaProvider
         $builder->addRelationship(self::REL_USER, 'user');
 
         return $builder->getRelationships();
-        // $relationships = [];
-
-        // $relationships = $this->addUserRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_USER)
-        // );
-
-        // $relationships = $this->addSheetRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_SHEET)
-        // );
-
-        // return $relationships;
-    }
-
-    private function addUserRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $user = $resource->user;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($user),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $user;
-        }
-
-        $relationships[self::REL_USER] = $relation;
-
-        return $relationships;
-    }
-
-    private function addSheetRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $sheet = $resource->sheet;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($sheet),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $sheet;
-        }
-
-        $relationships[self::REL_SHEET] = $relation;
-
-        return $relationships;
     }
 
     /**

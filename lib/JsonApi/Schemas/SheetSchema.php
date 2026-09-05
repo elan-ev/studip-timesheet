@@ -72,34 +72,6 @@ class SheetSchema extends \JsonApi\Schemas\SchemaProvider
         $builder->addRelationship(self::REL_CONTRACT, 'contract');
 
         return $builder->getRelationships();
-
-        // $relationships = [];
-
-        // $relationships = $this->addContractRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_CONTRACT)
-        // );
-
-        // return $relationships;
-    }
-
-    private function addContractRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $contract = $resource->contract;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($contract),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $contract;
-        }
-
-        $relationships[self::REL_CONTRACT] = $relation;
-
-        return $relationships;
     }
 
     /**

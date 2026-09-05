@@ -68,57 +68,6 @@ class PermissionSchema extends \JsonApi\Schemas\SchemaProvider
 
 
         return $builder->getRelationships();
-        // $relationships = [];
-
-        // $relationships = $this->addUserRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_USER)
-        // );
-
-        // $relationships = $this->addInstituteRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_INSTITUTE)
-        // );
-
-        // return $relationships;
-    }
-
-    private function addUserRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $user = $resource->user;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($user),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $user;
-        }
-
-        $relationships[self::REL_USER] = $relation;
-
-        return $relationships;
-    }
-
-    private function addInstituteRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $institute = $resource->institute;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($institute),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $institute;
-        }
-
-        $relationships[self::REL_INSTITUTE] = $relation;
-
-        return $relationships;
     }
 
     /**

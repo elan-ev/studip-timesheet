@@ -72,33 +72,6 @@ class RecordSchema extends \JsonApi\Schemas\SchemaProvider
         $builder->addRelationship(self::REL_SHEET, 'sheet');
 
         return $builder->getRelationships();
-        // $relationships = [];
-
-        // $relationships = $this->addSheetRelationship(
-        //     $relationships,
-        //     $resource,
-        //     $this->shouldInclude($context, self::REL_SHEET)
-        // );
-
-        // return $relationships;
-    }
-
-    private function addSheetRelationship(array $relationships, mixed $resource, bool $includeData): array
-    {
-        $sheet = $resource->sheet;
-        $relation = [
-            self::RELATIONSHIP_LINKS => [
-                Link::RELATED => $this->createLinkToResource($sheet),
-            ],
-        ];
-
-        if ($includeData) {
-            $relation[self::RELATIONSHIP_DATA] = $sheet;
-        }
-
-        $relationships[self::REL_SHEET] = $relation;
-
-        return $relationships;
     }
 
     /**

@@ -34,7 +34,7 @@ class StudipTimesheet extends StudIPPlugin implements SystemPlugin, JsonApiPlugi
             return;
         }
 
-        if ($this->isWorker($userId) || $this->isSupervisorOrAdmin($userId)) {
+        if ($this->isWorker($userId) || $this->isSupervisorOrAdmin($userId) || $GLOBALS['perm']->have_perm("root")) {
             $this->buildContentsNavigation();
             PageLayout::addStylesheet($this->getPluginUrl() . '/dist/timesheet.css');
 

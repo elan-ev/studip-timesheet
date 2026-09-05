@@ -1,4 +1,6 @@
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { api } from './api/kitsu-api.js';
 
 export const useRecordStore = defineStore('recordStore', () => {
     const records = ref(new Map());
@@ -91,6 +93,58 @@ export const useRecordStore = defineStore('recordStore', () => {
         }
     }
 
+    async function updatedRecord(recordId, recordData) {
+        isLoading.value = true;
+        try {
+            const { data } = await api.patch('timesheet-records', recordData);
+            data.id = recordId;
+            storeRecord(data);
+        } catch (err) {
+            console.error(`Error while updating record with id: ${recordId}`, err);
+            errors.value = err;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    async function createRecord(recordData) {
+         isLoading.value = true;
+        try {
+            const { data } = await api.post('timesheet-records', recordData);
+            storeRecord(data);
+        } catch (err) {
+            console.error('Error while creating record', err);
+            errors.value = err;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+
+    async function removeRecord(recordId, deletePermanently = false) {
+        const record = records.value.get(recordId);
+        if (!record) return;
+        
+        const sheetId = record['sheet-id'];
+        records.value.delete(String(recordId));
+        if (recordsBySheet.value.has(sheetId)) {
+            const data = recordsBySheet.value.get(sheetId);
+            const filtered = data.filter((m) => m.id !== recordId);
+            recordsBySheet.value.set(sheetId, filtered);
+        }
+        if (deletePermanently) {
+            isLoading.value = true;
+            try {
+                await api.delete('timesheet-records', recordId);
+            } catch (err) {
+                console.error(`Error while permanently deleting record with id: ${recordId}`, err);
+                errors.value = err;
+            } finally {
+                isLoading.value = false;
+            }
+        }
+    }
+
     return {
         records,
         isLoading,
@@ -102,6 +156,9 @@ export const useRecordStore = defineStore('recordStore', () => {
         byId,
         bySheetId,
         fetchBySheetId,
-        fetchById
+        fetchById,
+        updatedRecord,
+        createRecord,
+        removeRecord,
     };
 });
