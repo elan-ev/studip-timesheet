@@ -24,6 +24,8 @@ use StudipTimesheet\Models\Contract;
 
 class Index extends JsonApiController
 {
+    use FilterTrait;
+
     /**
      * @inheritDoc
      */
@@ -36,6 +38,17 @@ class Index extends JsonApiController
         ContractSchema::REL_EMPLOYEE,
         ContractSchema::REL_INSTITUTE,
         ContractSchema::REL_PREDECESSOR,
+    ];
+
+    protected $allowedFilteringParameters = [
+        'search',
+        'type',
+        'employee_id',
+        'institute_id',
+        'start_date',
+        'end_date',
+        'hours_per_month',
+        'predecessor_id',
     ];
 
     /**
@@ -53,9 +66,15 @@ class Index extends JsonApiController
             throw new AuthorizationFailedException();
         }
 
+        $this->validateFilters();
+        $filters = $this->getFilters();
+
         [$offset, $limit] = $this->getOffsetAndLimit();
 
-        $contracts = Contract::getAll();
+        [$whereClause, $params] = $this->buildWhereClause($filters);
+
+        $contracts = Contract::findBySQL("$whereClause ORDER BY start_date DESC", $params);
+
         $total = count($contracts);
         $data = array_slice($contracts, $offset, $limit);
 

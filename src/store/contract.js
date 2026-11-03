@@ -45,7 +45,7 @@ export const useContractStore = defineStore('contractStore', () => {
 
         newRecords.forEach((rec) => records.value.set(rec.id, rec));
 
-        const currentRecords = instituteRecords.value.get(instituteId) || [];
+        const currentRecords = contractsByInstitute.value.get(instituteId) || [];
 
         const updatedRecords = [...currentRecords];
 
@@ -72,11 +72,12 @@ export const useContractStore = defineStore('contractStore', () => {
     }
 
     function byInstituteId(instituteId) {
+        void contractsByInstitute.value.size;
         return contractsByInstitute.value.get(instituteId) || [];
     }
 
     async function fetchByInstituteId(instituteId, { loadMore = false } = {}) {
-        const pagination = getPaginationForForm(instituteId);
+        const pagination = getPaginationForInstitute(instituteId);
         if (loadMore && (!pagination.hasMore || isLoadingMore.value)) {
             return;
         }
@@ -135,7 +136,6 @@ export const useContractStore = defineStore('contractStore', () => {
         isLoading.value = true;
         try {
             const { data } = await api.patch('timesheet-contracts', contractData);
-            data.id = contractId;
             storeRecord(data);
         } catch (err) {
             console.error(`Error while updating contract with id: ${contractId}`, err);
@@ -163,10 +163,10 @@ export const useContractStore = defineStore('contractStore', () => {
         if (!record) return;
         
         const instituteId = record['institute-id'];
-        records.value.delete(String(instituteId));
+        records.value.delete(String(contractId));
         if (contractsByInstitute.value.has(instituteId)) {
             const data = contractsByInstitute.value.get(instituteId);
-            const filtered = data.filter((m) => m.id !== recordId);
+            const filtered = data.filter((m) => m.id !== contractId);
             contractsByInstitute.value.set(instituteId, filtered);
         }
         if (deletePermanently) {

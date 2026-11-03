@@ -34,17 +34,19 @@ class StudipTimesheet extends StudIPPlugin implements SystemPlugin, JsonApiPlugi
             return;
         }
 
-        if ($this->isWorker($userId) || $this->isSupervisorOrAdmin($userId) || $GLOBALS['perm']->have_perm("root")) {
-            $this->buildContentsNavigation();
+        if ($this->isWorker($userId) || $GLOBALS['perm']->have_perm("root") || $this->isSupervisorOrAdmin($userId)) {
             PageLayout::addStylesheet($this->getPluginUrl() . '/dist/timesheet.css');
+        }
 
+        if ($this->isWorker($userId)) {
+            $this->buildContentsNavigation();
             PageLayout::addScript($this->getPluginUrl() . '/dist/studip-timesheet.js', [
                 'type' => 'module',
                 'rel' => 'preload',
             ]);
         }
 
-        if ($GLOBALS['perm']->have_perm("root")) {
+        if ($GLOBALS['perm']->have_perm("root") || $this->isSupervisorOrAdmin($userId)) {
             $this->buildAdminNavigation();
             PageLayout::addScript($this->getPluginUrl() . '/dist/studip-timesheet-admin.js', [
                 'type' => 'module',
@@ -74,7 +76,7 @@ class StudipTimesheet extends StudIPPlugin implements SystemPlugin, JsonApiPlugi
         $navigation->setDescription('TODO: Lorem ipsum dolor');
         $navigation->setImage(Icon::create('timetable', 'navigation'));
         $navigation->addSubNavigation('index', new Navigation(
-            'Stundenzettel',
+            'Zeiterfassung',
             PluginEngine::getURL($this, [], 'timesheet')
         ));
 
@@ -85,13 +87,25 @@ class StudipTimesheet extends StudIPPlugin implements SystemPlugin, JsonApiPlugi
 
     private function buildAdminNavigation(): void
     {
-        $item = new Navigation(
-                $this->_('Zeiterfassung'),
-                PluginEngine::getLink($this, [], 'timesheetadmin#/admin')
-            );
-            if (Navigation::hasItem('/admin/config') && !Navigation::hasItem('/admin/config/timesheetadmin')) {
-                Navigation::addItem('/admin/config/timesheetadmin', $item);
-            }
+        $navigation = new Navigation($this->_('Zeiterfassung'));
+        $navigation->setDescription('TODO: ADMIN Lorem ipsum dolor');
+        $navigation->setImage(Icon::create('timetable', 'navigation'));
+        $navigation->addSubNavigation('index', new Navigation(
+            'Zeiterfassung',
+            PluginEngine::getURL($this, [], 'timesheetadmin')
+        ));
+
+        if (Navigation::hasItem('/contents')) {
+            Navigation::addItem('/contents/timesheetadmin', $navigation);
+        }
+
+        // $item = new Navigation(
+        //         $this->_('Zeiterfassung'),
+        //         PluginEngine::getLink($this, [], 'timesheetadmin#/admin')
+        //     );
+        //     if (Navigation::hasItem('/contents') && !Navigation::hasItem('/contentstimesheetadmin')) {
+        //         Navigation::addItem('/contents/timesheetadmin', $item);
+        //     }
     }
 
     public function isWorker(string $userId): bool

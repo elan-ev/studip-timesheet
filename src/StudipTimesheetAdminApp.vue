@@ -1,4 +1,10 @@
 <template>
-    <h2>{{ $gettext('Konfiguration: Zeiterfassung') }}</h2>
-    </template>
-    <script setup></script>
+    <RouterView />
+</template>
+
+<style lang="scss">
+#studip-timesheet-plugin-admin-app {
+    position: relative;
+    height: 100%;
+}
+</style>

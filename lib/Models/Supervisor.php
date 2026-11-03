@@ -28,13 +28,13 @@ class Supervisor extends SimpleORMap
         $config['db_table'] = 'timesheet_contract_supervisors';
 
         $config['belongs_to']['user'] = [
-            'class_name'  => User::class,
+            'class_name' => User::class,
             'foreign_key' => 'user_id',
             'on_delete' => 'delete',
         ];
 
         $config['belongs_to']['contract'] = [
-            'class_name'  => Contract::class,
+            'class_name' => Contract::class,
             'foreign_key' => 'contract_id',
             'on_delete' => 'delete',
         ];
@@ -47,8 +47,21 @@ class Supervisor extends SimpleORMap
         return self::findBySQL('1');
     }
 
-    public static function userIsSupervisor($contract_id): bool
+    public static function userIsSupervisor($user_id, $contract_id = null): bool
     {
-        return false;
+        $sql = 'user_id = ?';
+        $params = [$user_id];
+
+        if ($contract_id !== null) {
+            $sql .= ' AND contract_id = ?';
+            $params[] = $contract_id;
+        }
+
+        return self::countBySql($sql, $params) > 0;
+    }
+
+    public static function getForContract($contract_id): array
+    {
+        return self::findBySQL('contract_id = ?', [$contract_id]);
     }
 }

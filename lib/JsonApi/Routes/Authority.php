@@ -24,7 +24,7 @@ use User;
 
 class Authority
 {
-    private static function isGlobalAdmin(User $user): bool
+    public static function isGlobalAdmin(User $user): bool
     {
         $isRoot = $GLOBALS['perm']->have_perm('root', $user->id);
         $isAdmin = Permission::hasAssignedRole($user->id, Permission::ROLE_SUPERADMIN);
@@ -32,7 +32,7 @@ class Authority
         return $isRoot || $isAdmin;
     }
 
-    private static function isAdmin(User $user, string $instId): bool
+    public static function isAdmin(User $user, string $instId): bool
     {
         $isGlobalAdmin = self::isGlobalAdmin($user);
 
@@ -44,10 +44,10 @@ class Authority
         return  $isGlobalAdmin || $isInstAdmin;
     }
 
-    private static function isSupervisor(User $user, ?string $instId = null, ?string $contractId = null )
+    public static function isSupervisor(User $user, ?string $instId = null, ?string $contractId = null )
     {
 
-        $isContractSupervisor = $contractId ?? Supervisor::userIsSupervisor($contractId);
+        $isContractSupervisor = $contractId ?? Supervisor::userIsSupervisor($user->id, $contractId);
         $isInstSupervisor = $instId ?? Permission::hasAssignedRole($user->id, Permission::ROLE_SUPERVISOR, $instId);
 
         return $isContractSupervisor || $isInstSupervisor;

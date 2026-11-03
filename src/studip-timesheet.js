@@ -19,11 +19,6 @@ if (el) {
         contextStore.setPreferredLanguage(preferredLanguage);
     }
 
-    const isSupervisor = el?.dataset?.isSupervisor || null;
-    if (isSupervisor) {
-        contextStore.setIsSupervisor(isSupervisor);
-    }
-
     const isWorker = el?.dataset?.isWorker || null;
     if (isWorker) {
         contextStore.setIsWorker(isWorker);

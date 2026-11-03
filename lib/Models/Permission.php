@@ -15,7 +15,6 @@ use Institute;
  * @copyright 2026 elan e.V.
  * @license   GPL-3.0 WITH License-Supplement (see LICENSE-SUPPLEMENT.txt)
  *
- * @property int $id
  * @property string $user_id
  * @property string $institute_id
  * @property string $role
@@ -41,16 +40,23 @@ class Permission extends SimpleORMap
         $config['db_table'] = 'timesheet_permissions';
 
         $config['belongs_to']['user'] = [
-            'class_name'  => User::class,
+            'class_name' => User::class,
             'foreign_key' => 'user_id',
         ];
 
         $config['belongs_to']['institute'] = [
-            'class_name'  => Institute::class,
+            'class_name' => Institute::class,
             'foreign_key' => 'institute_id',
         ];
 
         parent::configure($config);
+    }
+
+    public static function find($id)
+    {
+        [$institute_id, $user_id] = explode('_', $id);
+
+        return self::findOneBySql('user_id = ? AND institute_id = ?', [$user_id, $institute_id]);
     }
 
     public static function getAll(): array
@@ -58,10 +64,21 @@ class Permission extends SimpleORMap
         return self::findBySQL('1');
     }
 
-    public static function hasAssignedRole($user_id, $role, $instId = null) : bool
+    public static function hasAssignedRole($user_id, $role, $instId = null): bool
     {
-        // return self::findBySQL();
+        $sql = 'user_id = ? AND role = ?';
+        $params = [$user_id, $role];
 
-        return false;
+        if ($instId !== null) {
+            $sql .= ' AND institute_id = ?';
+            $params[] = $instId;
+        }
+
+        return self::countBySql($sql, $params) > 0;
+    }
+
+    public static function hasPermission($user): bool
+    {
+        return self::countBySql('user_id = ?', [$user->id]) > 0;
     }
 }

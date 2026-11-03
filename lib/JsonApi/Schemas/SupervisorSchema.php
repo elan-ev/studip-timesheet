@@ -37,7 +37,11 @@ class SupervisorSchema extends \JsonApi\Schemas\SchemaProvider
      */
     public function getId($resource): ?string
     {
-        return $resource->id;
+        if (!empty($resource->id)) {
+            return (string) $resource->id;
+        }
+
+        return $resource['contract_id'] . '-' . $resource['user_id'];
     }
 
     /**

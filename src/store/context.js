@@ -6,8 +6,10 @@ export const useContextStore = defineStore('contextStore', () => {
     const preferredLanguage = ref('de_DE');
     const isWorker = ref(false);
     const isSupervisor = ref(false);
+    const isGlobalAdmin = ref(false);
+    const hasPermissions = ref(false);
 
-    const languageIsGerman = computed(() => preferredLanguage.value === 'de-DE');
+    const languageIsGerman = computed(() => preferredLanguage.value.toLowerCase().startsWith('de'));
 
     const langSelector = computed(() => {
         return languageIsGerman.value ? 'de' : 'en';
@@ -29,15 +31,27 @@ export const useContextStore = defineStore('contextStore', () => {
         isSupervisor.value = state;
     }
 
+    function setIsGlobalAdmin(state) {
+        isGlobalAdmin.value = state;
+    }
+
+    function setHasPermissions(state) {
+        hasPermissions.value = state;
+    }
+
     return {
         userId,
         preferredLanguage,
         isWorker,
         isSupervisor,
+        isGlobalAdmin,
+        hasPermissions,
         langSelector,
         setUserId,
         setPreferredLanguage,
         setIsWorker,
         setIsSupervisor,
+        setIsGlobalAdmin,
+        setHasPermissions
     };
 });

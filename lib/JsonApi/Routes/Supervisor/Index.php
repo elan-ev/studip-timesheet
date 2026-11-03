@@ -32,6 +32,11 @@ class Index extends JsonApiController
     /**
      * @inheritDoc
      */
+    protected $allowedFilteringParameters = ['user_id', 'contract_id'];
+
+    /**
+     * @inheritDoc
+     */
     protected $allowedIncludePaths = [
         SupervisorSchema::REL_CONTRACT,
         SupervisorSchema::REL_USER,
@@ -52,9 +57,14 @@ class Index extends JsonApiController
             throw new AuthorizationFailedException();
         }
 
+        $this->validateFilters();
+        $filters = $this->getFilters();
+
         [$offset, $limit] = $this->getOffsetAndLimit();
 
-        $supervisors = Supervisor::getAll();
+        [$whereClause, $params] = $this->buildWhereClause($filters);
+
+        $supervisors = Supervisor::findBySQL($whereClause, $params);
         $total = count($supervisors);
         $data = array_slice($supervisors, $offset, $limit);
 

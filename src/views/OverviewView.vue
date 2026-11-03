@@ -1,28 +1,3 @@
-<script setup>
-import { computed, ref } from 'vue';
-import { useContextStore } from '../store/context';
-import { useTimesheetStore } from '../store/timesheet';
-
-import SuiProgressSpinner from '../components/ui/SuiProgressSpinner.vue';
-import SuiStateHelper from '../components/ui/SuiStateHelper.vue';
-
-import TheWorkerOverview from '../components/timesheet/TheWorkerOverview.vue';
-import TheSupervisorOverview from '../components/timesheet/TheSupervisorOverview.vue';
-
-const contextStore = useContextStore();
-const timesheetStore = useTimesheetStore();
-
-const isLoading = ref(false);
-
-const isSupervisor = computed(() => {
-    return contextStore.isSupervisor;
-});
-
-const isWorker = computed(() => {
-    return contextStore.isWorker;
-});
-</script>
-
 <template>
     <div id="timesheet-overview-view">
         <div v-if="isLoading" class="timesheet-overview-loading">
@@ -38,6 +13,29 @@ const isWorker = computed(() => {
         </template>
     </div>
 </template>
+
+<script setup>
+import { computed, ref } from 'vue';
+import { useContextStore } from '../store/context';
+
+import SuiProgressSpinner from '../components/ui/SuiProgressSpinner.vue';
+import SuiStateHelper from '../components/ui/SuiStateHelper.vue';
+
+import TheWorkerOverview from '../components/timesheet/TheWorkerOverview.vue';
+import TheSupervisorOverview from '../components/timesheet/TheSupervisorOverview.vue';
+
+const contextStore = useContextStore();
+
+const isLoading = ref(false);
+
+const isSupervisor = computed(() => {
+    return contextStore.isSupervisor;
+});
+
+const isWorker = computed(() => {
+    return contextStore.isWorker;
+});
+</script>
 
 <style lang="scss">
 #timesheet-overview-view {

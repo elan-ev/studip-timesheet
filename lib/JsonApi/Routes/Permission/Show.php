@@ -42,15 +42,19 @@ class Show extends JsonApiController
      */
     public function __invoke(Request $request, Response $response, $args)
     {
-        $user = $this->getUser($request);
+        $requestUser = $this->getUser($request);
+
+        if (!Authority::canShowPermission($requestUser)) {
+            throw new AuthorizationFailedException();
+        }
 
         $permission = Permission::find($args['id']);
         if (!$permission) {
             throw new RecordNotFoundException();
         }
-
-        if (!Authority::canShowPermission($user)) {
-            throw new AuthorizationFailedException();
+        
+        if (!$permission->institute) {
+            throw new RecordNotFoundException();
         }
 
         return $this->getContentResponse($permission);

@@ -47,14 +47,18 @@ class Update extends JsonApiController
     public function __invoke(Request $request, Response $response, $args)
     {
         $json = $this->validate($request);
-        $user = $this->getUser($request);
+        $requestUser = $this->getUser($request);
 
-        if (!Authority::canUpdatePermission($user)) {
+        if (!Authority::canUpdatePermission($requestUser)) {
             throw new AuthorizationFailedException();
         }
 
         $permission = Permission::find($args['id']);
         if (!$permission) {
+            throw new RecordNotFoundException();
+        }
+        
+        if (!$permission->institute) {
             throw new RecordNotFoundException();
         }
 

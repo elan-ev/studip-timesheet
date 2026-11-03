@@ -22,21 +22,20 @@ final class InitTimesheetTables extends Migration
         $db = DBManager::get();
 
         $db->exec("CREATE TABLE IF NOT EXISTS `timesheet_permissions` (
-                `id`                            INT(11) NOT NULL AUTO_INCREMENT,
-                `user_id`                       CHAR(32) NOT NULL,
-                `institute_id`                  CHAR(32),
+                `user_id`                       VARCHAR(32) NOT NULL,
+                `institute_id`                  VARCHAR(32) NOT NULL,
                 `role`                          ENUM('superadmin','admin','supervisor') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,
 
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`user_id`, `institute_id`)
             )"
         );
 
         $db->exec("CREATE TABLE IF NOT EXISTS `timesheet_contracts` (
                 `id`                            INT(11) NOT NULL AUTO_INCREMENT,
-                `employee_id`                   CHAR(32) NOT NULL,
-                `institute_id`                  CHAR(32) NOT NULL,
+                `employee_id`                   VARCHAR(32) NOT NULL,
+                `institute_id`                  VARCHAR(32) NOT NULL,
                 `type`                          ENUM('new','extension','rehire') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `predecessor_id`                INT(11) DEFAULT NULL,
                 `label`                         MEDIUMTEXT DEFAULT NULL,
@@ -54,7 +53,7 @@ final class InitTimesheetTables extends Migration
 
         $db->exec("CREATE TABLE IF NOT EXISTS `timesheet_contract_supervisors` (
                 `contract_id`                   INT(11) NOT NULL,
-                `user_id`                       CHAR(32) NOT NULL,
+                `user_id`                       VARCHAR(32) NOT NULL,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,
 
@@ -71,7 +70,7 @@ final class InitTimesheetTables extends Migration
                 `is_suspended`                  TINYINT(1) NOT NULL DEFAULT 0,
                 `workflow_config`               MEDIUMTEXT NOT NULL,
                 `deleted_at`                    INT(11) DEFAULT NULL,
-                `deleted_by`                    CHAR(32) DEFAULT NULL,
+                `deleted_by`                    VARCHAR(32) DEFAULT NULL,
                 `frozen_hours_per_month`        INT(11) NOT NULL,
                 `mkdate`                        INT(11) UNSIGNED NOT NULL,
                 `chdate`                        INT(11) UNSIGNED NOT NULL,
@@ -101,7 +100,7 @@ final class InitTimesheetTables extends Migration
         $db->exec("CREATE TABLE IF NOT EXISTS `timesheet_workflow_logs` (
                 `id`                            INT(11) NOT NULL AUTO_INCREMENT,
                 `sheet_id`                      INT(11) NOT NULL,
-                `user_id`                       CHAR(32) NOT NULL,
+                `user_id`                       VARCHAR(32) NOT NULL,
                 `object_type`                   ENUM('sheet', 'record') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `action`                        ENUM('submit','approved_confirm','approve_final','reject','soft_delete', 'hard_delete', 'unsuspend','system_override','manual_unlock') CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
                 `comment`                       MEDIUMTEXT DEFAULT NULL,

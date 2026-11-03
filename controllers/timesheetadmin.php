@@ -13,16 +13,28 @@
  * @link      https://elan-ev.de
  */
 
+use StudipTimesheet\Models\Permission;
+use StudipTimesheet\JsonApi\Routes\Authority;
+
 class TimesheetAdminController extends PluginController
 {
     public function index_action()
     {
-        // PageLayout::disableSidebar();
+        $user = User::findCurrent();
+
+        if (!Authority::canIndexContract($user) && !Authority::canIndexContractForInstitute($user, '')) {
+            throw new \AccessDeniedException(_('Sie haben keine Berechtigung, die Zeiterfassung zu verwalten.'));
+        }
+
+        PageLayout::disableSidebar();
 
         $this->preferredLanguage = str_replace('_', '-', $_SESSION['_language']);
+        $this->isGlobalAdmin = Authority::isGlobalAdmin($user);
+        $this->isSupervisor = Authority::isSupervisor($user);
+        $this->hasPermissions = Permission::hasPermission($user);
 
-        if (Navigation::hasItem('/admin/config')) {
-            Navigation::activateItem('/admin/config/timesheetadmin');
+        if (Navigation::hasItem('/contents')) {
+            Navigation::activateItem('/contents/timesheetadmin');
         }
     }
 }

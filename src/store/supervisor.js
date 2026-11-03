@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from './api/kitsu-api.js';
 
@@ -7,8 +7,27 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
     const isLoading = ref(false);
     const errors = ref(false);
 
+    function prepareRequestConfig(includePaths = []) {
+        const config = {};
+        if (includePaths.length > 0) {
+            config.params = {
+                include: includePaths.join(','),
+            };
+        }
+        return config;
+    }
+
     function storeRecord(newRecord) {
         records.value.set(String(newRecord.id), newRecord);
+        records.value = new Map(records.value);
+    }
+
+    function storeRecords(newRecords) {
+        if (!newRecords || newRecords.length === 0) return;
+        newRecords.forEach((supervisor) => {
+            records.value.set(String(supervisor.id), supervisor);
+        });
+        records.value = new Map(records.value);
     }
 
     function clearRecords() {
@@ -21,7 +40,7 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
 
     const all = computed(() => {
         void records.value.size;
-        return [...records.value.values()];
+        return Array.from(records.value.values());
     });
 
     function byId(id) {
@@ -47,7 +66,7 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
 
     async function fetchById(id, includePaths = []) {
         isLoading.value = true;
-        errors.value = false;
+        clearErrors();
         try {
             const config = prepareRequestConfig(includePaths);
             const { data } = await api.fetch(`timesheet-supervisors/${id}`, config);
@@ -60,20 +79,14 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
         }
     }
 
-    async function fetchByUserId(userId, includePaths = []) {
-        // TODO
-    }
-
     async function fetchByContractId(contractId, includePaths = []) {
         isLoading.value = true;
-        errors.value = false;
+        clearErrors();
         try {
             const config = prepareRequestConfig(includePaths);
             const { data } = await api.fetch(`timesheet-contracts/${contractId}/supervisors`, config);
             if (data) {
-                data.forEach((supervisor) => {
-                    storeRecord(supervisor);
-                });
+                storeRecords(data);
             }
         } catch (err) {
             console.error(`Error while fetching supervisors with contract id: ${contractId}`, err);
@@ -91,9 +104,7 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
             const { data } = await api.fetch('timesheet-supervisors', config);
             if (data) {
                 clearRecords();
-                data.forEach((supervisor) => {
-                    storeRecord(supervisor);
-                });
+                storeRecords(data);
             }
         } catch (err) {
             console.error('Error while fetching all supervisors', err);
@@ -103,29 +114,14 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
         }
     }
 
-    // does't make sense yet!
-
-    // async function update(supervisorId, supervisorData) {
-    //     isLoading.value = true;
-    //     try {
-    //         const { data } = await api.patch('timesheet-supervisors', supervisorData);
-    //         data.id = supervisorId;
-    //         storeRecord(data);
-    //     } catch (err) {
-    //         console.error(`Error while updating supervisor with id: ${supervisorId}`, err);
-    //         errors.value = err;
-    //     } finally {
-    //         isLoading.value = false;
-    //     }
-    // }
-
     async function create(supervisorData) {
         isLoading.value = true;
+        clearErrors();
         try {
             const { data } = await api.post('timesheet-supervisors', supervisorData);
             storeRecord(data);
         } catch (err) {
-            console.error('Error while creating supvervisor', err);
+            console.error('Error while creating supervisor', err);
             errors.value = err;
         } finally {
             isLoading.value = false;
@@ -133,17 +129,20 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
     }
 
     async function remove(supervisorId, deletePermanently = false) {
-        const record = records.value.get(supervisorId);
+        const targetId = String(supervisorId);
+        const record = records.value.get(targetId);
         if (!record) return;
 
-        records.value.delete(String(supervisorId));
+        records.value.delete(targetId);
+        records.value = new Map(records.value);
 
         if (deletePermanently) {
             isLoading.value = true;
+            clearErrors();
             try {
-                await api.delete('timesheet-supervisors', supervisorId);
+                await api.delete('timesheet-supervisors', targetId);
             } catch (err) {
-                console.error(`Error while permanently deleting supervisor with id: ${supervisorId}`, err);
+                console.error(`Error while permanently deleting supervisor with id: ${targetId}`, err);
                 errors.value = err;
             } finally {
                 isLoading.value = false;
@@ -155,17 +154,13 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
         records,
         isLoading,
         errors,
-
         all,
-
         byId,
         byUserId,
         byContractId,
         fetchById,
-        // fetchByUserId,
         fetchByContractId,
         fetchAll,
-        // update,
         create,
         remove,
     };

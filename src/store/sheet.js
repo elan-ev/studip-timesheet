@@ -9,6 +9,7 @@ export const useSheetStore = defineStore('sheetStore', () => {
 
     function storeRecord(newRecord) {
         records.value.set(String(newRecord.id), newRecord);
+        records.value = new Map(records.value);
     }
 
     function clearRecords() {
@@ -59,7 +60,6 @@ export const useSheetStore = defineStore('sheetStore', () => {
             const config = prepareRequestConfig(includePaths);
             const { data } = await api.fetch(`timesheet-contracts/${contractId}/sheets`, config);
             if (data) {
-                clearRecords();
                 data.forEach((sheet) => {
                     storeRecord(sheet);
                 });
@@ -70,7 +70,6 @@ export const useSheetStore = defineStore('sheetStore', () => {
         } finally {
             isLoading.value = false;
         }
-
     }
 
     async function fetchAll(includePaths = []) {
@@ -97,7 +96,6 @@ export const useSheetStore = defineStore('sheetStore', () => {
         isLoading.value = true;
         try {
             const { data } = await api.patch('timesheet-sheets', sheetData);
-            data.id = sheetId;
             storeRecord(data);
         } catch (err) {
             console.error(`Error while updating sheet with id: ${sheetId}`, err);
@@ -137,10 +135,17 @@ export const useSheetStore = defineStore('sheetStore', () => {
                 isLoading.value = false;
             }
         }
-
     }
 
-
+    function prepareRequestConfig(includePaths = []) {
+        const config = {};
+        if (includePaths.length > 0) {
+            config.params = {
+                include: includePaths.join(','),
+            };
+        }
+        return config;
+    }
 
     return {
         records,
@@ -158,6 +163,6 @@ export const useSheetStore = defineStore('sheetStore', () => {
         fetchAll,
         update,
         create,
-        remove
+        remove,
     };
 });

@@ -6,7 +6,6 @@ export const useRecordStore = defineStore('recordStore', () => {
     const records = ref(new Map());
     const recordsBySheet = ref(new Map());
     const isLoading = ref(false);
-    const isLoadingMore = ref(false);
     const errors = ref(false);
 
     function storeRecord(newRecord) {
@@ -59,6 +58,7 @@ export const useRecordStore = defineStore('recordStore', () => {
     }
 
     function bySheetId(sheetId) {
+        void recordsBySheet.value.size;
         return recordsBySheet.value.get(sheetId) || [];
     }
 
@@ -93,7 +93,7 @@ export const useRecordStore = defineStore('recordStore', () => {
         }
     }
 
-    async function updatedRecord(recordId, recordData) {
+    async function updateRecord(recordId, recordData) {
         isLoading.value = true;
         try {
             const { data } = await api.patch('timesheet-records', recordData);
@@ -108,7 +108,7 @@ export const useRecordStore = defineStore('recordStore', () => {
     }
 
     async function createRecord(recordData) {
-         isLoading.value = true;
+        isLoading.value = true;
         try {
             const { data } = await api.post('timesheet-records', recordData);
             storeRecord(data);
@@ -120,11 +120,10 @@ export const useRecordStore = defineStore('recordStore', () => {
         }
     }
 
-
     async function removeRecord(recordId, deletePermanently = false) {
         const record = records.value.get(recordId);
         if (!record) return;
-        
+
         const sheetId = record['sheet-id'];
         records.value.delete(String(recordId));
         if (recordsBySheet.value.has(sheetId)) {
@@ -148,7 +147,6 @@ export const useRecordStore = defineStore('recordStore', () => {
     return {
         records,
         isLoading,
-        isLoadingMore,
         errors,
         storeRecord,
         storeRecords,
@@ -157,7 +155,7 @@ export const useRecordStore = defineStore('recordStore', () => {
         bySheetId,
         fetchBySheetId,
         fetchById,
-        updatedRecord,
+        updateRecord,
         createRecord,
         removeRecord,
     };

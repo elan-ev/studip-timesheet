@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { router } from './router/timesheet';
+import { adminRouter as router } from './router/timesheet-admin';
 import { useContextStore } from './store/context';
 import App from './StudipTimesheetAdminApp.vue';
 import { gettext } from './i18n.js';
@@ -17,6 +17,21 @@ if (el) {
     const preferredLanguage = el?.dataset?.preferredLanguage || null;
     if (preferredLanguage) {
         contextStore.setPreferredLanguage(preferredLanguage);
+    }
+
+    const isSupervisor = el?.dataset?.isSupervisor || null;
+    if (isSupervisor) {
+        contextStore.setIsSupervisor(isSupervisor);
+    }
+
+    const isGlobalAdmin = el?.dataset?.isGlobalAdmin || null;
+    if (isGlobalAdmin) {
+        contextStore.setIsGlobalAdmin(isGlobalAdmin);
+    }
+
+    const hasPermissions = el?.dataset?.hasPermissions || null;
+    if (hasPermissions) {
+        contextStore.setHasPermissions(hasPermissions);
     }
 
     app.use(gettext);
