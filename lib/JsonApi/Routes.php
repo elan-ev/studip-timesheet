@@ -36,6 +36,8 @@ trait Routes
         $group->patch('/timesheet-permissions/{id}', \StudipTimesheet\JsonApi\Routes\Permission\Update::class);
         $group->delete('/timesheet-permissions/{id}', \StudipTimesheet\JsonApi\Routes\Permission\Delete::class);
 
+        $group->get('/users/{id}/timesheet-permissions',\StudipTimesheet\JsonApi\Routes\Permission\IndexByUser::class);
+
         // Sheets.
         $group->get('/timesheet-sheets', \StudipTimesheet\JsonApi\Routes\Sheet\Index::class);
         $group->get('/timesheet-sheets/{id}', \StudipTimesheet\JsonApi\Routes\Sheet\Show::class);

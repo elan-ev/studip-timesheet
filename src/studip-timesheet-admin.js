@@ -33,6 +33,10 @@ if (el) {
     if (hasPermissions) {
         contextStore.setHasPermissions(hasPermissions);
     }
+    const userId = el?.dataset?.userId || null;
+    if (userId) {
+        contextStore.setUserId(userId);
+    } 
 
     app.use(gettext);
 
