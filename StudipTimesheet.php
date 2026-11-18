@@ -98,14 +98,6 @@ class StudipTimesheet extends StudIPPlugin implements SystemPlugin, JsonApiPlugi
         if (Navigation::hasItem('/contents')) {
             Navigation::addItem('/contents/timesheetadmin', $navigation);
         }
-
-        // $item = new Navigation(
-        //         $this->_('Zeiterfassung'),
-        //         PluginEngine::getLink($this, [], 'timesheetadmin#/admin')
-        //     );
-        //     if (Navigation::hasItem('/contents') && !Navigation::hasItem('/contentstimesheetadmin')) {
-        //         Navigation::addItem('/contents/timesheetadmin', $item);
-        //     }
     }
 
     public function isWorker(string $userId): bool

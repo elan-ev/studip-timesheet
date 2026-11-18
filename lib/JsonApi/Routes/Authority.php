@@ -108,6 +108,11 @@ class Authority
         return $GLOBALS['perm']->have_perm('root', $user->id);
     }
 
+    public static function canIndexPermissionByUser(User $request_user, String $target_user_id): bool
+    {
+        return $request_user->id === $target_user_id;
+    }
+
     public static function canCreateSupervisor(User $user, Contract $contract): bool
     {
         return self::isAdmin($user, $contract->institute_id);

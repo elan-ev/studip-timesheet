@@ -13,9 +13,7 @@
 namespace StudipTimesheet\JsonApi\Routes\Permission;
 
 use JsonApi\Errors\AuthorizationFailedException;
-use JsonApi\Errors\ConflictException;
 use JsonApi\JsonApiController;
-use JsonApi\Routes\ValidationTrait;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -26,6 +24,8 @@ use StudipTimesheet\Models\Permission;
 
 class Index extends JsonApiController
 {
+    use FilterTrait;
+
     /**
      * @inheritDoc
      */
@@ -56,7 +56,8 @@ class Index extends JsonApiController
 
         [$offset, $limit] = $this->getOffsetAndLimit();
 
-        $permissions = Permission::getAll();
+        $filter = $this->getQueryParameters()->get('filter', []);
+        $permissions = !empty($filter) ? $this->getFilter($filter) : Permission::getAll();
         $total = count($permissions);
         $data = array_slice($permissions, $offset, $limit);
 

@@ -22,9 +22,6 @@ class TimesheetAdminController extends PluginController
     {
         $user = User::findCurrent();
 
-        if (!Authority::canIndexContract($user) && !Authority::canIndexContractForInstitute($user, '')) {
-            throw new \AccessDeniedException(_('Sie haben keine Berechtigung, die Zeiterfassung zu verwalten.'));
-        }
 
         PageLayout::disableSidebar();
 
@@ -32,6 +29,12 @@ class TimesheetAdminController extends PluginController
         $this->isGlobalAdmin = Authority::isGlobalAdmin($user);
         $this->isSupervisor = Authority::isSupervisor($user);
         $this->hasPermissions = Permission::hasPermission($user);
+        $this->userId = $user->id;
+
+        if (!$this->isGlobalAdmin && !$this->isSupervisor && !$this->hasPermissions) {
+            throw new \AccessDeniedException(_('Sie haben keine Berechtigung, die Zeiterfassung zu verwalten.'));
+        }
+
 
         if (Navigation::hasItem('/contents')) {
             Navigation::activateItem('/contents/timesheetadmin');

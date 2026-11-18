@@ -3,6 +3,7 @@ import { gettext } from '../i18n.js';
 
 const AdminOverviewView = () => import('../views/admin/AdminOverviewView.vue');
 const ContractDetailView = () => import('../views/admin/ContractDetailView.vue');
+const SheetDetailView = () => import('../views/admin/SheetDetailView.vue');
 const NotFoundView = () => import('../views/NotFoundView.vue');
 
 const routes = [
@@ -17,7 +18,14 @@ const routes = [
         name: 'admin-contract-detail',
         component: ContractDetailView,
         props: true,
-        meta: { title: gettext.$gettext('Vertragsdetails & Stundenzettel') },
+        meta: { title: gettext.$gettext('Vertragsdetails & Stundennachweise') },
+    },
+        {
+        path: '/sheet/:id',
+        name: 'admin-sheet-detail',
+        component: SheetDetailView,
+        props: true,
+        meta: { title: gettext.$gettext('Stundennachweis') },
     },
     {
         path: '/:pathMatch(.*)*',

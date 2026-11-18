@@ -43,6 +43,10 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
         return Array.from(records.value.values());
     });
 
+    const empty = computed(() =>  {
+        return all.value.length === 0;
+    });
+
     function byId(id) {
         void records.value.size;
         return records.value.get(String(id));
@@ -155,6 +159,7 @@ export const useSupervisorStore = defineStore('supervisorStore', () => {
         isLoading,
         errors,
         all,
+        empty,
         byId,
         byUserId,
         byContractId,
