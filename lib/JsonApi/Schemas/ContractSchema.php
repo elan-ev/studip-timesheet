@@ -33,6 +33,7 @@ class ContractSchema extends \JsonApi\Schemas\SchemaProvider
     const REL_EMPLOYEE = 'employee';
     const REL_INSTITUTE = 'institute';
     const REL_PREDECESSOR = 'predecessor';
+    const REL_SHEETS = 'sheets';
 
     /**
      * {@inheritdoc}
@@ -76,6 +77,9 @@ class ContractSchema extends \JsonApi\Schemas\SchemaProvider
         $builder->addRelationship(self::REL_INSTITUTE, 'institute');
         if ($resource->predecessor) {
             $builder->addRelationshipData(self::REL_PREDECESSOR, 'predecessor');
+        }
+        if (!empty($resource->sheets)) {
+            $builder->addRelationshipData(self::REL_SHEETS, 'sheets');
         }
 
         return $builder->getRelationships();

@@ -6,6 +6,9 @@ export const useContractStore = defineStore('contractStore', () => {
     const records = ref(new Map());
     const contractsByInstitute = ref(new Map());
     const paginationByInstitute = ref(new Map());
+    const contractsByEmployee = ref(new Map());
+    const employeeInstitutes = ref(new Map());
+
     const isLoading = ref(false);
     const isLoadingMore = ref(false);
     const errors = ref(false);
@@ -40,6 +43,41 @@ export const useContractStore = defineStore('contractStore', () => {
         }
     }
 
+    function storeRecordsForEmployee(newRecords, userId) {
+        if (!newRecords || newRecords.length === 0) return;
+
+        newRecords.forEach((rec) => records.value.set(rec.id, rec));
+
+        const currentRecords = contractsByEmployee.value.get(userId) || [];
+        const currentEmployeeInstitutes = employeeInstitutes.value.get(userId) || [];
+
+        const updatedRecords = [...currentRecords];
+        const updatedInstitutes = [...currentEmployeeInstitutes];
+
+        newRecords.forEach((newRecord) => {
+            const existingIndex = updatedRecords.findIndex((m) => m.id === newRecord.id);
+            if (existingIndex > -1) {
+                updatedRecords[existingIndex] = newRecord;
+            } else {
+                updatedRecords.push(newRecord);
+            }
+
+            // We also want to compile a list of institutes out of employ records.
+            const contractInst = newRecord?.institute?.data || null;
+            if (contractInst) {
+                const existingInstituteIndex = updatedInstitutes.findIndex((m) => m.id === contractInst.id);
+                if (existingInstituteIndex > -1) {
+                    updatedInstitutes[existingInstituteIndex] = contractInst;
+                } else {
+                    updatedInstitutes.push(contractInst);
+                }
+            }
+        });
+
+        contractsByEmployee.value.set(userId, updatedRecords);
+        employeeInstitutes.value.set(userId, updatedInstitutes);
+    }
+
     function storeRecords(newRecords, instituteId) {
         if (!newRecords || newRecords.length === 0) return;
 
@@ -64,6 +102,8 @@ export const useContractStore = defineStore('contractStore', () => {
     function clearRecords() {
         records.value = new Map();
         contractsByInstitute.value = new Map();
+        contractsByEmployee.value = new Map();
+        employeeInstitutes.value = new Map();
     }
 
     function byId(id) {
@@ -74,6 +114,16 @@ export const useContractStore = defineStore('contractStore', () => {
     function byInstituteId(instituteId) {
         void contractsByInstitute.value.size;
         return contractsByInstitute.value.get(instituteId) || [];
+    }
+
+    function byEmployeeId(employeeId) {
+        void contractsByEmployee.value.size;
+        return contractsByEmployee.value.get(employeeId) || [];
+    }
+
+    function instituteByEmployeeId(employeeId) {
+        void employeeInstitutes.value.size;
+        return employeeInstitutes.value.get(employeeId) || [];
     }
 
     async function fetchByInstituteId(instituteId, { loadMore = false } = {}) {
@@ -146,7 +196,7 @@ export const useContractStore = defineStore('contractStore', () => {
     }
 
     async function create(contractData) {
-         isLoading.value = true;
+        isLoading.value = true;
         try {
             const { data } = await api.post('timesheet-contracts', contractData);
             storeRecord(data);
@@ -161,7 +211,7 @@ export const useContractStore = defineStore('contractStore', () => {
     async function remove(contractId, deletePermanently = false) {
         const record = records.value.get(contractId);
         if (!record) return;
-        
+
         const instituteId = record['institute-id'];
         records.value.delete(String(contractId));
         if (contractsByInstitute.value.has(instituteId)) {
@@ -169,6 +219,24 @@ export const useContractStore = defineStore('contractStore', () => {
             const filtered = data.filter((m) => m.id !== contractId);
             contractsByInstitute.value.set(instituteId, filtered);
         }
+
+        const employeeId = record['employee-id'];
+        if (contractsByEmployee.value.has(employeeId)) {
+            const employeeData = contractsByEmployee.value.get(employeeId);
+            const filteredEmployeeData = employeeData.filter((m) => m.id !== contractId);
+            contractsByEmployee.value.set(employeeId, filteredEmployeeData);
+
+            // Also filter employee institutes.
+            const existingEmployeeInstIds = filteredEmployeeData.length > 0 ?
+                filteredEmployeeData.map((c) => c['institute-id']) : [];
+
+            if (employeeInstitutes.value.has(employeeId)) {
+                const employeeInstData = employeeInstitutes.value.get(employeeId);
+                const filteredEmployeeInstData = employeeInstData.filter((inst) => existingEmployeeInstIds.includes(inst.id));
+                employeeInstitutes.value.set(employeeId, filteredEmployeeInstData);
+            }
+        }
+
         if (deletePermanently) {
             isLoading.value = true;
             try {
@@ -182,6 +250,30 @@ export const useContractStore = defineStore('contractStore', () => {
         }
     }
 
+    async function fetchByEmployee(userId) {
+        isLoading.value = true;
+        try {
+            const config = prepareRequestConfig(['institute', 'sheets']);
+            const { data } = await api.fetch(`employee/${userId}/timesheet-contracts`, config);
+            storeRecordsForEmployee(data, userId);
+        } catch (err) {
+            console.error(`Error while fetching timesheet contracts for employee with user id: ${userId}`, err);
+            errors.value = err;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    function prepareRequestConfig(includePaths = []) {
+        const config = {};
+        if (includePaths.length > 0) {
+            config.params = {
+                include: includePaths.join(','),
+            };
+        }
+        return config;
+    }
+
     return {
         records,
         contractsByInstitute,
@@ -189,11 +281,13 @@ export const useContractStore = defineStore('contractStore', () => {
         isLoading,
         isLoadingMore,
         errors,
+        contractsByEmployee,
+        employeeInstitutes,
 
         getPaginationForInstitute,
         storeRecord,
         storeRecords,
-        clearRecords, 
+        clearRecords,
         byId,
         byInstituteId,
         fetchByInstituteId,
@@ -201,5 +295,8 @@ export const useContractStore = defineStore('contractStore', () => {
         update,
         create,
         remove,
+        fetchByEmployee,
+        byEmployeeId,
+        instituteByEmployeeId,
     };
 });

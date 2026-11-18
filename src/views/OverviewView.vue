@@ -15,8 +15,9 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useContextStore } from '../store/context';
+import { useContractStore } from '../store/contract';
 
 import SuiProgressSpinner from '../components/ui/SuiProgressSpinner.vue';
 import SuiStateHelper from '../components/ui/SuiStateHelper.vue';
@@ -25,8 +26,9 @@ import TheWorkerOverview from '../components/timesheet/TheWorkerOverview.vue';
 import TheSupervisorOverview from '../components/timesheet/TheSupervisorOverview.vue';
 
 const contextStore = useContextStore();
+const contractStore = useContractStore();
 
-const isLoading = ref(false);
+// const isLoading = ref(false);
 
 const isSupervisor = computed(() => {
     return contextStore.isSupervisor;
@@ -35,6 +37,17 @@ const isSupervisor = computed(() => {
 const isWorker = computed(() => {
     return contextStore.isWorker;
 });
+
+const isLoading = computed(() => {
+    return contractStore.isLoading;
+});
+
+onMounted(() => {
+    if (Boolean(isWorker.value)) {
+        contractStore.fetchByEmployee(contextStore.userId);
+    }
+});
+
 </script>
 
 <style lang="scss">

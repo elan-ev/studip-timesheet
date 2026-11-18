@@ -78,6 +78,11 @@ class Authority
         return self::isAdmin($user, $instId);
     }
 
+    public static function canIndexContractsForEmployee(User $user, User $employee): bool
+    {
+        return self::isGlobalAdmin($user) || $user->id === $employee->id;
+    }
+
     public static function canShowContract(User $user, Contract $resource): bool
     {
         return self::isAdmin($user, $resource->institute_id) || $resource->employee_id == $user->id;

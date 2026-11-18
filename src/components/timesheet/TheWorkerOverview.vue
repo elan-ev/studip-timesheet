@@ -2,6 +2,7 @@
   <div class="timesheet-worker-overview">
     <header class="timesheet-worker-overview__header">
       <h1>{{ $gettext('Zeiterfassung') }}</h1>
+      <CreateRecordDrawer :contracts="employeeContracts" :institutes="employeeInstitutes" @record-created="onRecordCreated"/>
     </header>
 
     <section class="timesheet-worker-overview__kpis">
@@ -21,9 +22,41 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import WorkerOverviewKpis from './WorkerOverviewKpis.vue';
 import WorkerOverviewTimeline from './WorkerOverviewTimeline.vue';
 import WorkerOverviewCalendar from './WorkerOverviewCalendar.vue';
+import CreateRecordDrawer from './CreateRecordDrawer.vue';
+import { useContractStore } from '../../store/contract';
+import { useContextStore } from '../../store/context';
+
+const contractStore = useContractStore();
+const contextStore = useContextStore();
+
+const isWorker = computed(() => {
+  return contextStore.isWorker;
+});
+
+const userId = computed(() => {
+  return contextStore.userId;
+});
+
+const isLoading = computed(() => {
+  return contractStore.isLoading;
+});
+
+const employeeContracts = computed(() => {
+  return contractStore.contractsByEmployee.get(userId.value) || [];
+});
+
+const employeeInstitutes = computed(() => {
+  return contractStore.employeeInstitutes.get(userId.value) || [];
+});
+
+const onRecordCreated = () => {
+  console.log('handle the store refresh and so on, in here as the main page');
+};
+
 </script>
 
 <style lang="scss">
@@ -31,6 +64,16 @@ import WorkerOverviewCalendar from './WorkerOverviewCalendar.vue';
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  &__header {
+    h1 {
+      margin: 0;
+    }
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &__kpis {
     display: grid;

@@ -27,6 +27,7 @@ trait Routes
         $group->post('/timesheet-contracts', \StudipTimesheet\JsonApi\Routes\Contract\Create::class);
         $group->patch('/timesheet-contracts/{id}', \StudipTimesheet\JsonApi\Routes\Contract\Update::class);
         $group->delete('/timesheet-contracts/{id}', \StudipTimesheet\JsonApi\Routes\Contract\Delete::class);
+        $group->get('/employee/{id}/timesheet-contracts', \StudipTimesheet\JsonApi\Routes\Contract\IndexByEmployee::class);
 
         // Permissions.
         $group->get('/timesheet-permissions', \StudipTimesheet\JsonApi\Routes\Permission\Index::class);
@@ -57,7 +58,7 @@ trait Routes
 
         // In the contest of Supervisor, updating it does not make any sense!
         // $group->patch('/timesheet-supervisors/{id}', \StudipTimesheet\JsonApi\Routes\Supervisor\Update::class);
-        
+
         // Contract-Supervisors.
         $group->get('/timesheet-contracts/{id}/supervisors', \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorIndex::class);
         $group->get('/timesheet-contracts/{contract_id}/supervisors/{id}', \StudipTimesheet\JsonApi\Routes\Supervisor\ContractSupervisorShow::class);
