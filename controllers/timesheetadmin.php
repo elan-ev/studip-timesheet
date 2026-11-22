@@ -35,6 +35,9 @@ class TimesheetAdminController extends PluginController
             throw new \AccessDeniedException(_('Sie haben keine Berechtigung, die Zeiterfassung zu verwalten.'));
         }
 
+        $this->instituteSearch = new \StandardSearch('Institut_id', ['simple_name' => true]);
+        $this->userSearch = new \StandardSearch('user_id', ['simple_name' => true]);
+
 
         if (Navigation::hasItem('/contents')) {
             Navigation::activateItem('/contents/timesheetadmin');

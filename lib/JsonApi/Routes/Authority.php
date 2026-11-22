@@ -90,27 +90,27 @@ class Authority
 
     public static function canCreatePermission(User $user): bool
     {
-        return $GLOBALS['perm']->have_perm('root', $user->id);
+        return self::isGlobalAdmin($user);
     }
 
-    public static function canDeletePermission(User $user): bool
+    public static function canDeletePermission(User $user, Permission $resource): bool
     {
-        return $GLOBALS['perm']->have_perm('root', $user->id);
+        return self::isGlobalAdmin($user) && $resource->user_id !== $user->id;
     }
 
     public static function canIndexPermission(User $user): bool
     {
-        return $GLOBALS['perm']->have_perm('root', $user->id);
+        return self::isGlobalAdmin($user);
     }
 
     public static function canShowPermission(User $user): bool
     {
-        return $GLOBALS['perm']->have_perm('root', $user->id);
+        return self::isGlobalAdmin($user);
     }
 
     public static function canUpdatePermission(User $user): bool
     {
-        return $GLOBALS['perm']->have_perm('root', $user->id);
+        return self::isGlobalAdmin($user) && $resource->user_id !== $user->id;
     }
 
     public static function canIndexPermissionByUser(User $request_user, String $target_user_id): bool
