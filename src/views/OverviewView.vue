@@ -45,7 +45,6 @@ const isLoading = computed(() => {
 onMounted(async () => {
     if (Boolean(isWorker.value)) {
         await contractStore.fetchByEmployee(contextStore.userId);
-        await contractStore.fetchByEmployee(contextStore.userId);
     }
 });
 
