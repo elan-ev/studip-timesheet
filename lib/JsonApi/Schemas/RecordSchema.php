@@ -89,6 +89,7 @@ class RecordSchema extends \JsonApi\Schemas\SchemaProvider
     {
         return [
             'absence-types' => Record::ABSENCE_TYPES,
+            'absent-types-selection' => Record::getAbsenceTypesSelection(),
         ];
     }
 }

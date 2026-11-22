@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from './api/kitsu-api.js';
+import { useSheetStore } from './sheet.js';
 
 export const useContractStore = defineStore('contractStore', () => {
     const records = ref(new Map());
@@ -46,7 +47,9 @@ export const useContractStore = defineStore('contractStore', () => {
     function storeRecordsForEmployee(newRecords, userId) {
         if (!newRecords || newRecords.length === 0) return;
 
-        newRecords.forEach((rec) => records.value.set(rec.id, rec));
+        const extractedSheets = [];
+
+        newRecords.forEach((rec) => records.value.set(String(rec.id), rec));
 
         const currentRecords = contractsByEmployee.value.get(userId) || [];
         const currentEmployeeInstitutes = employeeInstitutes.value.get(userId) || [];
@@ -72,7 +75,27 @@ export const useContractStore = defineStore('contractStore', () => {
                     updatedInstitutes.push(contractInst);
                 }
             }
+
+            // Now the sheets will be extracted and populated.
+            const contractSheets = newRecord?.sheets?.data || [];
+            if (Array.isArray(contractSheets) && contractSheets.length > 0) {
+                contractSheets.forEach((sheet) => {
+                    extractedSheets.push({
+                        ...sheet,
+                        // Make sure contact-id is included.
+                        'contract-id': sheet['contract-id'] ?? newRecord.id,
+                    });
+                });
+            }
+
+            // We also store the single record!
+            storeRecord(newRecord);
         });
+
+        if (extractedSheets.length > 0) {
+            const sheetStore = useSheetStore();
+            sheetStore.storeRecords(extractedSheets);
+        }
 
         contractsByEmployee.value.set(userId, updatedRecords);
         employeeInstitutes.value.set(userId, updatedInstitutes);
@@ -253,7 +276,7 @@ export const useContractStore = defineStore('contractStore', () => {
     async function fetchByEmployee(userId) {
         isLoading.value = true;
         try {
-            const config = prepareRequestConfig(['institute', 'sheets']);
+            const config = prepareRequestConfig(['institute', 'sheets', 'sheets.records']);
             const { data } = await api.fetch(`employee/${userId}/timesheet-contracts`, config);
             storeRecordsForEmployee(data, userId);
         } catch (err) {

@@ -141,6 +141,7 @@ const floatingRef = useTemplateRef('floatingRef')
 const isOpen = ref(false)
 
 let focusTrapTimer = null
+let focusTimer = null;
 let lastFocusedElement = null
 
 const drawerStyle = computed(() => {
@@ -176,31 +177,38 @@ const open = () => {
         }, 300)
 
         if (floatingRef.value) {
-            const targetFocusable = props.focusTargetId ? floatingRef.value.querySelector(`#${props.focusTargetId}`) : null;
-            if (targetFocusable) {
-                targetFocusable.focus()
-                return
-            }
+            focusTimer = setTimeout(() => {
+                const targetFocusable = props.focusTargetId ? floatingRef.value.querySelector(`#${props.focusTargetId}`) : null;
+                if (targetFocusable) {
+                    targetFocusable.focus()
+                    return
+                }
 
-            const body = floatingRef.value.querySelector('.sui-drawer--body')
-            const bodyFocusable = body ? body.querySelector(FOCUS_SELECTORS) : null
-            if (bodyFocusable) {
-                bodyFocusable.focus()
-                return
-            }
+                const body = floatingRef.value.querySelector('.sui-drawer--body')
+                const bodyFocusable = body ? body.querySelector(FOCUS_SELECTORS) : null
+                if (bodyFocusable) {
+                    bodyFocusable.focus()
+                    return
+                }
 
-            let defaultFocusable = floatingRef.value.querySelector(FOCUS_SELECTORS) || floatingRef.value
-            if (defaultFocusable) {
-                defaultFocusable.focus()
-                return
-            }
+                let defaultFocusable = floatingRef.value.querySelector(FOCUS_SELECTORS) || floatingRef.value
+                if (defaultFocusable) {
+                    defaultFocusable.focus()
+                    return
+                }
+            }, 300);
         }
     })
 }
 
 const close = () => {
     if (!isOpen.value) return
-    clearTimeout(focusTrapTimer)
+    if (focusTrapTimer) {
+        clearTimeout(focusTrapTimer)
+    }
+    if (focusTimer) {
+        clearTimeout(focusTimer)
+    }
     isOpen.value = false
     emit('update:modelValue', false)
     emit('close')
@@ -224,7 +232,12 @@ const onOverlayClick = () => {
 }
 
 onUnmounted(() => {
-    clearTimeout(focusTrapTimer)
+    if (focusTrapTimer) {
+        clearTimeout(focusTrapTimer)
+    }
+    if (focusTimer) {
+        clearTimeout(focusTimer)
+    }
 })
 
 defineExpose({

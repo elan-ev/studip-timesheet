@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from './api/kitsu-api.js';
+import { useRecordStore } from './record.js';
 
 export const useSheetStore = defineStore('sheetStore', () => {
     const records = ref(new Map());
@@ -9,6 +10,34 @@ export const useSheetStore = defineStore('sheetStore', () => {
 
     function storeRecord(newRecord) {
         records.value.set(String(newRecord.id), newRecord);
+        records.value = new Map(records.value);
+    }
+
+    function storeRecords(newRecords) {
+        if (!Array.isArray(newRecords) || newRecords.length === 0) return;
+
+        const recordStore = useRecordStore();
+
+        newRecords.forEach((newRecord) => {
+            if (newRecord && newRecord.id) {
+                records.value.set(String(newRecord.id), newRecord);
+            }
+
+            // Now the records will be extracted and populated.
+            const sheetRecords = newRecord?.records?.data || [];
+            if (Array.isArray(sheetRecords) && sheetRecords.length > 0) {
+                const normalizedRecords = [];
+                sheetRecords.forEach((record) => {
+                    normalizedRecords.push({
+                        ...record,
+                        // Make sure sheet-id is included.
+                        'sheet-id': record['sheet-id'] ?? newRecord.id,
+                    });
+                });
+                recordStore.storeRecords(normalizedRecords, newRecord.id);
+            }
+        });
+
         records.value = new Map(records.value);
     }
 
@@ -154,6 +183,7 @@ export const useSheetStore = defineStore('sheetStore', () => {
 
         all,
         storeRecord,
+        storeRecords,
         clearRecords,
         clearErrors,
         byId,

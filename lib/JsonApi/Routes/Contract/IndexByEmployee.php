@@ -38,6 +38,7 @@ class IndexByEmployee extends JsonApiController
     protected $allowedIncludePaths = [
         ContractSchema::REL_INSTITUTE,
         ContractSchema::REL_SHEETS,
+        ContractSchema::REL_SHEETS_RECORDS,
     ];
 
     /**

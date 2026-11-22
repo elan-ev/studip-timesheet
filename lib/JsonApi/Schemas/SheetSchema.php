@@ -31,6 +31,7 @@ class SheetSchema extends \JsonApi\Schemas\SchemaProvider
     protected string $resourceType = self::TYPE;
 
     const REL_CONTRACT = 'contract';
+    const REL_RECORDS = 'records';
 
     /**
      * {@inheritdoc}
@@ -70,6 +71,7 @@ class SheetSchema extends \JsonApi\Schemas\SchemaProvider
         }
 
         $builder->addRelationship(self::REL_CONTRACT, 'contract');
+        $builder->addRelationship(self::REL_RECORDS, 'records');
 
         return $builder->getRelationships();
     }

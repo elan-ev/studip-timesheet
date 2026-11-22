@@ -42,9 +42,10 @@ const isLoading = computed(() => {
     return contractStore.isLoading;
 });
 
-onMounted(() => {
+onMounted(async () => {
     if (Boolean(isWorker.value)) {
-        contractStore.fetchByEmployee(contextStore.userId);
+        await contractStore.fetchByEmployee(contextStore.userId);
+        await contractStore.fetchByEmployee(contextStore.userId);
     }
 });
 

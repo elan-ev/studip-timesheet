@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from './api/kitsu-api.js';
 
@@ -29,7 +29,7 @@ export const useRecordStore = defineStore('recordStore', () => {
     function storeRecords(newRecords, sheetId) {
         if (!newRecords || newRecords.length === 0) return;
 
-        newRecords.forEach((rec) => records.value.set(rec.id, rec));
+        newRecords.forEach((rec) => records.value.set(String(rec.id), rec));
 
         const currentRecords = recordsBySheet.value.get(sheetId) || [];
 
@@ -46,6 +46,22 @@ export const useRecordStore = defineStore('recordStore', () => {
 
         recordsBySheet.value.set(sheetId, updatedRecords);
     }
+
+    const absenceTypes = computed(() => {
+        // TODO: find a way to read this from backend!
+        return [
+            {id: 'work', value: 'Arbeitszeit'},
+            {id: 'maternity', value: 'Mutterschaft'},
+            {id: 'holiday', value: 'Urlaub'},
+            {id: 'vacation', value: 'Feiertag'},
+            {id: 'sick', value: 'Krank'},
+        ]
+        // const first = records.value.values().next().value;
+        // if (first && first?.meta?.['absent-types-selection']?.length > 0) {
+        //     return first.meta['absent-types-selection'];
+        // }
+        // return [];
+    })
 
     function clearRecords() {
         records.value = new Map();
@@ -145,6 +161,7 @@ export const useRecordStore = defineStore('recordStore', () => {
     }
 
     return {
+        absenceTypes,
         records,
         isLoading,
         errors,

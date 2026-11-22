@@ -2,7 +2,7 @@
   <div class="timesheet-worker-overview">
     <header class="timesheet-worker-overview__header">
       <h1>{{ $gettext('Zeiterfassung') }}</h1>
-      <CreateRecordDrawer :contracts="employeeContracts" :institutes="employeeInstitutes" @record-created="onRecordCreated"/>
+      <CreateRecordDrawer :user-id="userId" :institutes="employeeInstitutes" @record-created="onRecordCreated" />
     </header>
 
     <section class="timesheet-worker-overview__kpis">
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
 import WorkerOverviewKpis from './WorkerOverviewKpis.vue';
 import WorkerOverviewTimeline from './WorkerOverviewTimeline.vue';
 import WorkerOverviewCalendar from './WorkerOverviewCalendar.vue';
@@ -33,20 +33,11 @@ import { useContextStore } from '../../store/context';
 const contractStore = useContractStore();
 const contextStore = useContextStore();
 
-const isWorker = computed(() => {
-  return contextStore.isWorker;
-});
+const { proxy } = getCurrentInstance();
+const $gettext = proxy?.$gettext ?? ((str) => str);
 
 const userId = computed(() => {
   return contextStore.userId;
-});
-
-const isLoading = computed(() => {
-  return contractStore.isLoading;
-});
-
-const employeeContracts = computed(() => {
-  return contractStore.contractsByEmployee.get(userId.value) || [];
 });
 
 const employeeInstitutes = computed(() => {
@@ -54,7 +45,7 @@ const employeeInstitutes = computed(() => {
 });
 
 const onRecordCreated = () => {
-  console.log('handle the store refresh and so on, in here as the main page');
+  STUDIP.Report.success($gettext('Erfolg'), [$gettext('Der Datensatz wurde erstellt')]);
 };
 
 </script>

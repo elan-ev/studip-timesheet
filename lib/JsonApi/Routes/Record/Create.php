@@ -122,16 +122,13 @@ class Create extends JsonApiController
         $absenceType = self::arrayGet($json, 'data.attributes.absence-type');
         $comment = self::arrayGet($json, 'data.attributes.comment');
 
-        $startDatetime = "$date $startTime";
-        $endDatetime = "$date $endTime";
-
         $record = new Record();
         $record->sheet_id = $sheetId;
         $record->date = MiscHelper::datetimeStringToTimestamp($date, 0,0,1);
-        $record->start_time = MiscHelper::datetimeStringToTimestamp($startDatetime);
-        $record->end_time = MiscHelper::datetimeStringToTimestamp($endDatetime);
-        $record->break_start = MiscHelper::datetimeStringToTimestamp($breakStart);
-        $record->break_duration = $breakDuration;
+        $record->start_time = MiscHelper::datetimeStringToTimestamp($startTime);
+        $record->end_time = MiscHelper::datetimeStringToTimestamp($endTime);
+        $record->break_start = $breakStart ? MiscHelper::datetimeStringToTimestamp($breakStart) : null;
+        $record->break_duration = $breakDuration ?? 0;
         $record->absence_type = $absenceType;
         $record->comment = $comment;
         $record->store();

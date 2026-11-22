@@ -54,6 +54,32 @@ class Record extends SimpleORMap
         parent::configure($config);
     }
 
+    public static function getAbsenceTypesSelection(): array
+    {
+        return [
+            [
+                'id' => self::ABSENCE_TYPE_HOLIDAY,
+                'value' => _('Feiertag'),
+            ],
+            [
+                'id' => self::ABSENCE_TYPE_VACATION,
+                'value' => _('Urlaub'),
+            ],
+            [
+                'id' => self::ABSENCE_TYPE_SICK,
+                'value' => _('Krank'),
+            ],
+            [
+                'id' => self::ABSENCE_TYPE_WORK,
+                'value' => _('Arbeitszeit'),
+            ],
+            [
+                'id' => self::ABSENCE_TYPE_MATERNITY,
+                'value' => _('Mutterschaft'),
+            ],
+        ];
+    }
+
     public static function getAll(): array
     {
         return self::findBySQL('1');

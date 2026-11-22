@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => {
     const isDev = mode === 'development';
 
     return {
+        base: './',
         plugins: [vue()],
         resolve: {
             alias: {
