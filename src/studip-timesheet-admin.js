@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { adminRouter as router } from './router/timesheet-admin';
+import { createAdminRouter } from './router/timesheet-admin';
 import { useContextStore } from './store/context';
 import App from './StudipTimesheetAdminApp.vue';
 import { gettext } from './i18n.js';
@@ -19,24 +19,46 @@ if (el) {
         contextStore.setPreferredLanguage(preferredLanguage);
     }
 
-    const isSupervisor = el?.dataset?.isSupervisor || null;
-    if (isSupervisor) {
-        contextStore.setIsSupervisor(isSupervisor);
+    function parseBoolean(value, fallback = false) {
+        if (typeof value === 'boolean') return value;
+        if (value === null || value === undefined) return fallback;
+        if (typeof value === 'number') return value !== 0;
+        if (typeof value === 'string') {
+            const normalized = value.trim().toLowerCase();
+            if (['true', '1', 'yes', 'on'].includes(normalized)) return true;
+            if (['false', '0', 'no', 'off', ''].includes(normalized)) return false;
+        }
+        return fallback;
     }
 
-    const isGlobalAdmin = el?.dataset?.isGlobalAdmin || null;
-    if (isGlobalAdmin) {
-        contextStore.setIsGlobalAdmin(isGlobalAdmin);
+    if (el?.dataset?.isSupervisor !== undefined) {
+        contextStore.setIsSupervisor(parseBoolean(el.dataset.isSupervisor));
     }
 
-    const hasPermissions = el?.dataset?.hasPermissions || null;
-    if (hasPermissions) {
-        contextStore.setHasPermissions(hasPermissions);
+    if (el?.dataset?.isGlobalAdmin !== undefined) {
+        contextStore.setIsGlobalAdmin(parseBoolean(el.dataset.isGlobalAdmin));
     }
+
+    if (el?.dataset?.hasPermissions !== undefined) {
+        contextStore.setHasPermissions(parseBoolean(el.dataset.hasPermissions));
+    }
+
     const userId = el?.dataset?.userId || null;
     if (userId) {
         contextStore.setUserId(userId);
-    } 
+    }
+
+    const instituteSearch = el?.dataset?.instituteSearch || null;
+    if (instituteSearch) {
+        contextStore.setInstituteSearch(instituteSearch);
+    }
+
+    const userSearch = el?.dataset?.userSearch || null;
+    if (userSearch) {
+        contextStore.setUserSearch(userSearch);
+    }
+
+    const router = createAdminRouter();
 
     app.use(gettext);
 

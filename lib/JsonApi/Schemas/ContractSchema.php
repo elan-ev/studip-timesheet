@@ -51,7 +51,8 @@ class ContractSchema extends \JsonApi\Schemas\SchemaProvider
         return [
             'institute-id' => $resource['institute_id'],
             'employee-id' => $resource['employee_id'],
-            'type'  => $resource['type'],
+            'employee-name' => $resource->employee->getFullName(),
+            'contract-type'  => $resource['type'],
             'label' => $resource['label'],
             'hours-per-month' => (int) $resource['hours_per_month'],
             'start-date' => $resource['start_date'] ? date('Y-m-d', $resource['start_date']) : null,

@@ -63,7 +63,7 @@ class IndexByInstitute extends JsonApiController
         [$offset, $limit] = $this->getOffsetAndLimit();
 
         $contracts = Contract::findBySQL(
-            'institut_id = ? ORDER BY start_date DESC',
+            'institute_id = ? ORDER BY start_date DESC',
             [$institutId]
         );
         $total = count($contracts);
