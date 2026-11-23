@@ -4,6 +4,7 @@ import { createAdminRouter } from './router/timesheet-admin';
 import { useContextStore } from './store/context';
 import App from './StudipTimesheetAdminApp.vue';
 import { gettext } from './i18n.js';
+import {parseBoolean, stripGlobalBoxSizing} from './utils/appHelpers.js';
 import PrimeVue from 'primevue/config'
 
 const el = document.getElementById('studip-timesheet-plugin-admin-app');
@@ -18,18 +19,6 @@ if (el) {
     const preferredLanguage = el?.dataset?.preferredLanguage || null;
     if (preferredLanguage) {
         contextStore.setPreferredLanguage(preferredLanguage);
-    }
-
-    function parseBoolean(value, fallback = false) {
-        if (typeof value === 'boolean') return value;
-        if (value === null || value === undefined) return fallback;
-        if (typeof value === 'number') return value !== 0;
-        if (typeof value === 'string') {
-            const normalized = value.trim().toLowerCase();
-            if (['true', '1', 'yes', 'on'].includes(normalized)) return true;
-            if (['false', '0', 'no', 'off', ''].includes(normalized)) return false;
-        }
-        return fallback;
     }
 
     if (el?.dataset?.isSupervisor !== undefined) {
@@ -64,6 +53,8 @@ if (el) {
     app.use(gettext);
 
     app.use(router);
+
+    stripGlobalBoxSizing();
 
     app.use(PrimeVue, {
         locale: {

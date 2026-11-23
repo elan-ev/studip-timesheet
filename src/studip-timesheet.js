@@ -4,6 +4,7 @@ import { router } from './router/timesheet';
 import { useContextStore } from './store/context';
 import App from './StudipTimesheetApp.vue';
 import { gettext } from './i18n.js';
+import {parseBoolean, stripGlobalBoxSizing} from './utils/appHelpers.js';
 import PrimeVue from 'primevue/config'
 
 const el = document.getElementById('studip-timesheet-plugin-app');
@@ -33,6 +34,8 @@ if (el) {
     app.use(gettext);
 
     app.use(router);
+
+    stripGlobalBoxSizing();
 
     app.use(PrimeVue, {
         zIndex: {
