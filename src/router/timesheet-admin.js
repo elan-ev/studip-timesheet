@@ -123,7 +123,7 @@ const routes = [
         path: '/',
         name: 'admin-overview',
         component: AdminOverviewView,
-        meta: { title: gettext.$gettext('Vertragsübersicht & Verwaltung') },
+        meta: { title: gettext.$gettext('Zeiterfassung') },
     },
     {
         path: '/permissions',
@@ -137,7 +137,7 @@ const routes = [
         name: 'admin-contracts-overview',
         component: ContractsOverviewView,
         props: true,
-        meta: { title: gettext.$gettext('Verträge') },
+        meta: { title: gettext.$gettext('Vertragsübersicht') },
     },
     {
         path: '/contract/:id',
