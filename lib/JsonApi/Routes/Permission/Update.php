@@ -49,17 +49,17 @@ class Update extends JsonApiController
         $json = $this->validate($request);
         $requestUser = $this->getUser($request);
 
-        if (!Authority::canUpdatePermission($requestUser)) {
-            throw new AuthorizationFailedException();
-        }
-
         $permission = Permission::find($args['id']);
         if (!$permission) {
             throw new RecordNotFoundException();
         }
         
-        if (!$permission->institute) {
+        if ($permission->institute_id !== 'global' && !$permission->institute) {
             throw new RecordNotFoundException();
+        }
+
+        if (!Authority::canUpdatePermission($requestUser, $permission)) {
+            throw new AuthorizationFailedException();
         }
 
         $permission = $this->updatePermission($json, $permission);
@@ -98,8 +98,10 @@ class Update extends JsonApiController
     private function updatePermission(array $json, Permission $permission)
     {
         $role = self::arrayGet($json, 'data.attributes.role');
+        $institute_id = self::arrayGet($json, 'data.attributes.institute-id');
 
         $permission->role = $role;
+        $permission->institute_id = $institute_id;
         $permission->store();
 
         return $permission;
