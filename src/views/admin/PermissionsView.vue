@@ -1,11 +1,5 @@
 <template>
     <section class="permissions-view">
-        <header class="permissions-view__header">
-            <h2 class="permissions-view__title">
-                {{ gettext.$gettext('Berechtigungen & Supervisors') }}
-            </h2>
-        </header>
-
         <section class="permissions-view__section">
             <h3 class="permissions-view__heading">
                 {{ gettext.$gettext('Rollen & Berechtigungen') }}
@@ -21,6 +15,7 @@
                         <th>{{ gettext.$gettext('Nutzername') }}</th>
                         <th>{{ gettext.$gettext('Einrichtung') }}</th>
                         <th>{{ gettext.$gettext('Rolle') }}</th>
+                        <th class="actions">{{ gettext.$gettext('Aktionen') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +28,9 @@
                         </td>
                         <td>
                             {{ formatRole(getAttr(item, 'role')) }}
+                        </td>
+                        <td class="actions">
+                            <PermissionUpdateDrawer :permission-id="item.id"/>
                         </td>
                     </tr>
                 </tbody>
@@ -85,10 +83,14 @@
             </p>
         </section>
     </section>
+
+    <PermissionCreateDrawer />
 </template>
 
 <script setup>
 import { computed, onMounted } from 'vue';
+import PermissionCreateDrawer from './permissions/PermissionCreateDrawer.vue';
+import PermissionUpdateDrawer from './permissions/PermissionUpdateDrawer.vue';
 import { gettext } from '@/i18n.js';
 import { usePermissionStore } from '@/store/permission.js';
 import { useSupervisorStore } from '@/store/supervisor.js';

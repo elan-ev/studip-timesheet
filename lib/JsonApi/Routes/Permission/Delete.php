@@ -37,17 +37,17 @@ class Delete extends JsonApiController
     {
         $requestUser = $this->getUser($request);
 
-        if (!Authority::canDeletePermission($requestUser)) {
-            throw new AuthorizationFailedException();
-        }
-
         $permission = Permission::find($args['id']);
         if (!$permission) {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException('Permission not found');
         }
         
-        if (!$permission->institute) {
-            throw new RecordNotFoundException();
+        if ($permission->institute_id !== 'global' && !$permission->institute) {
+            throw new RecordNotFoundException('Institute not found');
+        }
+
+        if (!Authority::canDeletePermission($requestUser, $permission)) {
+            throw new AuthorizationFailedException();
         }
 
         $permission->delete();

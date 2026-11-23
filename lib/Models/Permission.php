@@ -54,7 +54,7 @@ class Permission extends SimpleORMap
 
     public static function find($id)
     {
-        [$institute_id, $user_id] = explode('_', $id);
+        [$user_id, $institute_id] = explode('_', $id);
 
         return self::findOneBySql('user_id = ? AND institute_id = ?', [$user_id, $institute_id]);
     }
