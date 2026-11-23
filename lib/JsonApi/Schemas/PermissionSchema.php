@@ -48,7 +48,10 @@ class PermissionSchema extends \JsonApi\Schemas\SchemaProvider
     {
         return [
             'role' => $resource['role'],
-            'institute-id' => $resource['institute_id']
+            'institute-id' => $resource['institute_id'],
+            'institute-name' => $resource->institute ?  $resource->institute->getFullName() : '',
+            'user-id' => $resource['user_id'],
+            'user-name' => $resource->user->getFullName() ?? '',
         ];
     }
 

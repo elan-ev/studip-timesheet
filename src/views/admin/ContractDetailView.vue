@@ -1,81 +1,128 @@
 <template>
-    <article v-if="contract" class="contract-card">
-        <header class="contract-card__header">
-            <div class="contract-card__title-group">
-                <p class="contract-card__eyebrow">
-                    {{ contractType || gettext.$gettext('Vertrag') }}
-                </p>
-                <h2 class="contract-card__title">
-                    {{ contractLabel || gettext.$gettext('Unbenannter Vertrag') }}
-                </h2>
-                <p class="contract-card__employee">
-                    {{ employeeName }}
-                </p>
-            </div>
+    <template v-if="contract">
+        <article class="contract-card">
+            <header class="contract-card__header">
+                <div class="contract-card__title-group">
+                    <p class="contract-card__eyebrow">
+                        {{ contractType || gettext.$gettext('Vertrag') }}
+                    </p>
+                    <h2 class="contract-card__title">
+                        {{ contractLabel || gettext.$gettext('Unbenannter Vertrag') }}
+                    </h2>
+                    <p class="contract-card__employee">
+                        {{ employeeName }}
+                    </p>
+                </div>
 
-            <div class="contract-card__kpi">
-                <span class="contract-card__kpi-value">{{ hoursLabel }}</span>
-                <span class="contract-card__kpi-meta">{{ periodLabel }}</span>
-            </div>
-        </header>
+                <div class="contract-card__kpi">
+                    <span class="contract-card__kpi-value">{{ hoursLabel }}</span>
+                    <span class="contract-card__kpi-meta">{{ periodLabel }}</span>
+                </div>
+            </header>
 
-        <dl class="contract-card__details">
-            <div class="contract-card__detail">
-                <dt>{{ gettext.$gettext('Beschäftigte Person') }}</dt>
-                <dd>
-                    {{ employeeName }}
-                    <span class="contract-card__id">(#{{ employeeId }})</span>
-                </dd>
-            </div>
+            <dl class="contract-card__details">
+                <div class="contract-card__detail">
+                    <dt>{{ gettext.$gettext('Beschäftigte Person') }}</dt>
+                    <dd>
+                        {{ employeeName }}
+                        <span class="contract-card__id">(#{{ employeeId }})</span>
+                    </dd>
+                </div>
 
-            <div class="contract-card__detail">
-                <dt>{{ gettext.$gettext('Einrichtung') }}</dt>
-                <dd>{{ instituteId }}</dd>
-            </div>
+                <div class="contract-card__detail">
+                    <dt>{{ gettext.$gettext('Einrichtung') }}</dt>
+                    <dd>{{ instituteId }}</dd>
+                </div>
 
-            <div class="contract-card__detail">
-                <dt>{{ gettext.$gettext('Vertragszeitraum') }}</dt>
-                <dd>{{ periodLabel }}</dd>
-            </div>
+                <div class="contract-card__detail">
+                    <dt>{{ gettext.$gettext('Vertragszeitraum') }}</dt>
+                    <dd>{{ periodLabel }}</dd>
+                </div>
 
-            <div class="contract-card__detail">
-                <dt>{{ gettext.$gettext('Monatskontingent') }}</dt>
-                <dd>{{ hoursLabel }}</dd>
-            </div>
+                <div class="contract-card__detail">
+                    <dt>{{ gettext.$gettext('Monatskontingent') }}</dt>
+                    <dd>{{ hoursLabel }}</dd>
+                </div>
 
-            <div class="contract-card__detail">
-                <dt>{{ gettext.$gettext('Erster Monat') }}</dt>
-                <dd>
-                    <span
-                        class="contract-card__badge"
-                        :class="{ 'contract-card__badge--active': halfHoursFirstMonth }"
-                    >
-                        {{
-                            halfHoursFirstMonth
-                                ? gettext.$gettext('Halbe Stunden aktiv')
-                                : gettext.$gettext('Regulär')
-                        }}
-                    </span>
-                </dd>
-            </div>
+                <div class="contract-card__detail">
+                    <dt>{{ gettext.$gettext('Erster Monat') }}</dt>
+                    <dd>
+                        <span
+                            class="contract-card__badge"
+                            :class="{ 'contract-card__badge--active': halfHoursFirstMonth }"
+                        >
+                            {{
+                                halfHoursFirstMonth
+                                    ? gettext.$gettext('Halbe Stunden aktiv')
+                                    : gettext.$gettext('Regulär')
+                            }}
+                        </span>
+                    </dd>
+                </div>
 
-            <div class="contract-card__detail">
-                <dt>{{ gettext.$gettext('Letzter Monat') }}</dt>
-                <dd>
-                    <span
-                        class="contract-card__badge"
-                        :class="{ 'contract-card__badge--active': halfHoursLastMonth }"
-                    >
-                        {{
-                            halfHoursLastMonth
-                                ? gettext.$gettext('Halbe Stunden aktiv')
-                                : gettext.$gettext('Regulär')
-                        }}
-                    </span>
-                </dd>
-            </div>
-        </dl>
-    </article>
+                <div class="contract-card__detail">
+                    <dt>{{ gettext.$gettext('Letzter Monat') }}</dt>
+                    <dd>
+                        <span
+                            class="contract-card__badge"
+                            :class="{ 'contract-card__badge--active': halfHoursLastMonth }"
+                        >
+                            {{
+                                halfHoursLastMonth
+                                    ? gettext.$gettext('Halbe Stunden aktiv')
+                                    : gettext.$gettext('Regulär')
+                            }}
+                        </span>
+                    </dd>
+                </div>
+            </dl>
+        </article>
+
+        <section class="contract-sheets">
+            <h3 class="contract-sheets__heading">
+                {{ gettext.$gettext('Stundennachweise') }}
+            </h3>
+
+            <p v-if="sheetStore.isLoading && sheets.length === 0" class="contract-card__status">
+                {{ gettext.$gettext('Stundennachweise werden geladen…') }}
+            </p>
+
+            <table v-else-if="sheets.length > 0" class="default">
+                <thead>
+                    <tr>
+                        <th>{{ gettext.$gettext('Zeitraum') }}</th>
+                        <th>{{ gettext.$gettext('Soll-Stunden') }}</th>
+                        <th>{{ gettext.$gettext('Ist-Stunden') }}</th>
+                        <th>{{ gettext.$gettext('Übertrag') }}</th>
+                        <th>{{ gettext.$gettext('Status') }}</th>
+                        <th class="actions">{{ gettext.$gettext('Aktionen') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="sheet in sheets" :key="sheet.id">
+                        <td>
+                            <RouterLink :to="getSheetRoute(sheet.id)">
+                                {{ formatSheetPeriod(sheet) }}
+                            </RouterLink>
+                        </td>
+                        <td>{{ formatHours(getSheetAttr(sheet, 'target-hours') ?? getSheetAttr(sheet, 'hours')) }}</td>
+                        <td>{{ formatHours(getSheetAttr(sheet, 'actual-hours') ?? getSheetAttr(sheet, 'worked-hours')) }}</td>
+                        <td>{{ formatHours(getSheetAttr(sheet, 'carryover-hours') ?? getSheetAttr(sheet, 'carryover')) }}</td>
+                        <td>{{ formatSheetStatus(sheet) }}</td>
+                        <td class="actions">
+                            <RouterLink :to="getSheetRoute(sheet.id)">
+                                {{ gettext.$gettext('Öffnen') }}
+                            </RouterLink>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p v-else class="contract-card__status">
+                {{ gettext.$gettext('Für diesen Vertrag liegen noch keine Stundennachweise vor.') }}
+            </p>
+        </section>
+    </template>
 
     <p v-else-if="contractStore.isLoading" class="contract-card__status">
         {{ gettext.$gettext('Vertragsdaten werden geladen…') }}
@@ -91,12 +138,15 @@ import { computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { gettext } from '@/i18n.js';
 import { useContractStore } from '@/store/contract.js';
+import { useSheetStore } from '@/store/sheet.js';
 
 const route = useRoute();
 const contractStore = useContractStore();
+const sheetStore = useSheetStore();
 
 const contractId = computed(() => String(route.params.id ?? ''));
 const contract = computed(() => (contractId.value ? contractStore.byId(contractId.value) : undefined));
+const sheets = computed(() => (contractId.value ? sheetStore.byContractId(contractId.value) : []));
 
 const source = computed(() => contract.value?.attributes ?? contract.value ?? {});
 
@@ -119,19 +169,64 @@ const hoursLabel = computed(() => {
     return `${hours} ${gettext.$gettext('Std. / Monat')}`;
 });
 
-async function ensureContract(id) {
+function getSheetAttr(sheet, key) {
+    return sheet?.attributes?.[key] ?? sheet?.[key];
+}
+
+function formatSheetPeriod(sheet) {
+    const label = getSheetAttr(sheet, 'label');
+    if (label) return label;
+
+    const year = getSheetAttr(sheet, 'year');
+    const month = getSheetAttr(sheet, 'month');
+    if (year && month) {
+        return `${String(month).padStart(2, '0')}/${year}`;
+    }
+
+    return `${gettext.$gettext('Stundennachweis')} #${sheet.id}`;
+}
+
+function formatHours(value) {
+    if (value === undefined || value === null || value === '') {
+        return '–';
+    }
+    return `${Number(value)} ${gettext.$gettext('Std.')}`;
+}
+
+function formatSheetStatus(sheet) {
+    const status = getSheetAttr(sheet, 'status');
+    if (status) return status;
+
+    const isClosed = getSheetAttr(sheet, 'closed') ?? getSheetAttr(sheet, 'is-closed');
+    if (typeof isClosed === 'boolean') {
+        return isClosed ? gettext.$gettext('Abgeschlossen') : gettext.$gettext('Offen');
+    }
+
+    return '–';
+}
+
+function getSheetRoute(sheetId) {
+    return {
+        name: 'admin-sheet-detail',
+        params: { id: String(sheetId) },
+        query: contractId.value ? { contractId: contractId.value } : undefined,
+    };
+}
+
+async function ensureData(id) {
     if (!id) return;
     if (!contractStore.byId(id)) {
         await contractStore.fetchById(id);
     }
+    await sheetStore.fetchByContractId(id);
 }
 
 onMounted(() => {
-    ensureContract(contractId.value);
+    ensureData(contractId.value);
 });
 
 watch(contractId, (newId) => {
-    ensureContract(newId);
+    ensureData(newId);
 });
 </script>
 
@@ -254,6 +349,16 @@ watch(contractId, (newId) => {
         border-radius: var(--radius-md, 8px);
         background: var(--surface-subtle, #fafbfd);
         color: var(--text-muted, #5c6675);
+    }
+}
+
+.contract-sheets {
+    margin-top: 1.5rem;
+
+    &__heading {
+        margin: 0 0 0.75rem;
+        font-size: 1.15rem;
+        color: var(--text-primary, #18202c);
     }
 }
 </style>

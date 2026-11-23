@@ -24,6 +24,8 @@ use StudipTimesheet\Models\Supervisor;
 
 class Index extends JsonApiController
 {
+    use FilterTrait;
+    
     /**
      * @inheritDoc
      */

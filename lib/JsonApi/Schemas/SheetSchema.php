@@ -47,6 +47,7 @@ class SheetSchema extends \JsonApi\Schemas\SchemaProvider
     public function getAttributes($resource, ContextInterface $context): iterable
     {
         return [
+            'contract-id' => $resource['contract_id'],
             'year' => (int) $resource['year'],
             'month' => (int) $resource['month'],
             'status' => $resource['status'],

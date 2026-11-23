@@ -8,34 +8,44 @@ export const useSheetStore = defineStore('sheetStore', () => {
     const isLoading = ref(false);
     const errors = ref(false);
 
-    function storeRecord(newRecord) {
+    function extractAndStoreSheetRecords(sheetRecord) {
+        const rawRecords = Array.isArray(sheetRecord?.records)
+            ? sheetRecord.records
+            : sheetRecord?.records?.data;
+
+        if (!Array.isArray(rawRecords) || rawRecords.length === 0) return;
+
+        const fullRecords = rawRecords.filter(
+            (rec) => rec && (rec.attributes !== undefined || rec.date !== undefined || rec['start-time'] !== undefined)
+        );
+
+        if (fullRecords.length === 0) return;
+
+        const recordStore = useRecordStore();
+        const normalizedRecords = fullRecords.map((record) => ({
+            ...record,
+            'sheet-id': record['sheet-id'] ?? record?.attributes?.['sheet-id'] ?? sheetRecord.id,
+        }));
+
+        recordStore.storeRecords(normalizedRecords, sheetRecord.id);
+    }
+
+    function storeRecord(newRecord, { commit = true } = {}) {
+        if (!newRecord || !newRecord.id) return;
+
         records.value.set(String(newRecord.id), newRecord);
-        records.value = new Map(records.value);
+        extractAndStoreSheetRecords(newRecord);
+
+        if (commit) {
+            records.value = new Map(records.value);
+        }
     }
 
     function storeRecords(newRecords) {
         if (!Array.isArray(newRecords) || newRecords.length === 0) return;
 
-        const recordStore = useRecordStore();
-
         newRecords.forEach((newRecord) => {
-            if (newRecord && newRecord.id) {
-                records.value.set(String(newRecord.id), newRecord);
-            }
-
-            // Now the records will be extracted and populated.
-            const sheetRecords = newRecord?.records?.data || [];
-            if (Array.isArray(sheetRecords) && sheetRecords.length > 0) {
-                const normalizedRecords = [];
-                sheetRecords.forEach((record) => {
-                    normalizedRecords.push({
-                        ...record,
-                        // Make sure sheet-id is included.
-                        'sheet-id': record['sheet-id'] ?? newRecord.id,
-                    });
-                });
-                recordStore.storeRecords(normalizedRecords, newRecord.id);
-            }
+            storeRecord(newRecord, { commit: false });
         });
 
         records.value = new Map(records.value);

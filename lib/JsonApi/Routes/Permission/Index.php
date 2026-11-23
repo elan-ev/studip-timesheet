@@ -56,8 +56,7 @@ class Index extends JsonApiController
 
         [$offset, $limit] = $this->getOffsetAndLimit();
 
-        $filter = $this->getQueryParameters()->get('filter', []);
-        $permissions = !empty($filter) ? $this->getFilter($filter) : Permission::getAll();
+        $permissions = Permission::getAll();
         $total = count($permissions);
         $data = array_slice($permissions, $offset, $limit);
 

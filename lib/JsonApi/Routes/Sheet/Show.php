@@ -30,6 +30,7 @@ class Show extends JsonApiController
      */
     protected $allowedIncludePaths = [
         SheetSchema::REL_CONTRACT,
+        SheetSchema::REL_RECORDS
     ];
 
     /**

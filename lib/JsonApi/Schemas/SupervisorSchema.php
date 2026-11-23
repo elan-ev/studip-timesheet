@@ -52,6 +52,7 @@ class SupervisorSchema extends \JsonApi\Schemas\SchemaProvider
         return [
             'contract-id' => (int) $resource['contract_id'],
             'user-id' => (int) $resource['user_id'],
+            'user-name' => $resource->user->getFullName() ?? '',
         ];
     }
 
